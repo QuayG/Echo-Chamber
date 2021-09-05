@@ -1,23 +1,37 @@
 package de.echochamber.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
-@Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "rem_user")
+@Getter
+@Setter
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserEntity {
 
-    @ApiModelProperty(required = true, example = "John", notes = "A users first name")
+    @Id
+    @GeneratedValue
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @ApiModelProperty(required = true, example = "Doe", notes = "A users last name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "role")
     private String role;
 
-    private String password;
+
 
 }

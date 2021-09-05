@@ -1,0 +1,9 @@
+profile:
+  datasource:
+    url: postgresql://localhost:5432/echochamber
+    user: admin
+    pass: aaa
+
+echochamber:
+  github-client:
+    access-token: "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"
