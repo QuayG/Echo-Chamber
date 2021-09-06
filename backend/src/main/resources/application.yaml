@@ -2,7 +2,7 @@ spring:
   profiles:
     active: spring.profiles.active@
   application:
-    name: echochamber
+    name: echo-chamber
   datasource:
     url: jdbc:${profile.datasource.url}
     username: ${profile.datasource.user}
