@@ -1,6 +1,6 @@
 profile:
   datasource:
-    url: postgresql://localhost:5432/echochamber
+    url: postgresql://localhost:5432/echo-chamber
     user: admin
     pass: aaa
 
