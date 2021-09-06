@@ -20,6 +20,10 @@ public class UserEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
+
+    @Column(name = "user_name", nullable = false)
+    private String userName;
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -28,6 +32,9 @@ public class UserEntity {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "avatar_url")
+    private String avatarUrl;
 
     @Column(name = "role")
     private String role;
