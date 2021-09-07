@@ -28,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         properties = "spring.profiles.active:h2",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@ContextConfiguration(classes = SpringTestContextConfiguration.class)
 public class JwtAuthFilterTest {
 
     @LocalServerPort
@@ -71,5 +70,62 @@ public class JwtAuthFilterTest {
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertNotNull(response.getBody());
+    }
+
+    @Test
+    @DisplayName("Token signed with wrong secret should be rejected.")
+    public void invalidSignedJwtTest(){
+        // Given
+        String username = "Foo";
+        Instant now = Instant.now();
+        Date iat = Date.from(now);
+        Date exp = Date.from(now.plus(Duration.ofMinutes(jwtConfig.getExpiresAfterMinutes())));
+        String wrongSecret = jwtConfig.getSecret() + "invalid";
+        String token = Jwts.builder()
+                .setClaims(new HashMap<>(
+                        Map.of("role", "USER")
+                ))
+                .setIssuedAt(iat)
+                .setExpiration(exp)
+                .setSubject(username)
+                .signWith(SignatureAlgorithm.HS256, wrongSecret).compact();
+
+        // When
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        ResponseEntity<User> response = testRestTemplate
+                .exchange(url(), HttpMethod.GET, new HttpEntity<>(headers), User.class);
+
+        // Then
+        assertThat(response.getStatusCode(), is(HttpStatus.FORBIDDEN));
+    }
+
+    @Test
+    @DisplayName("Requests with expired token should be rejected.")
+    public void expiredJwtTest(){
+        // Given
+        String username = "Foo";
+        Instant now = Instant.now().minus(Duration.ofMinutes(jwtConfig.getExpiresAfterMinutes() * 2));
+        Date iat = Date.from(now);
+        Date exp = Date.from(now.plus(Duration.ofMinutes(jwtConfig.getExpiresAfterMinutes())));
+        String token = Jwts.builder()
+                .setClaims(new HashMap<>(
+                        Map.of("role", "USER")
+                ))
+                .setIssuedAt(iat)
+                .setExpiration(exp)
+                .setSubject(username)
+                .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret()).compact();
+
+        // When
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        ResponseEntity<User> response = testRestTemplate
+                .exchange(url(), HttpMethod.GET, new HttpEntity<>(headers), User.class);
+
+        // Then
+        assertThat(response.getStatusCode(), is(HttpStatus.FORBIDDEN));
+
     }
 }
