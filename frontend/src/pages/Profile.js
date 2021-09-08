@@ -3,6 +3,8 @@ import {useAuth} from "../auth/AuthProvider";
 import Page from "../components/Page";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
+import Main from "../components/Main";
+import Avatar from "../components/Avatar";
 
 export default function Profile() {
 
@@ -14,8 +16,10 @@ export default function Profile() {
 
     return (
         <Page>
-            <Header title={user.username}/>
-            <h1>This will once be the profile page</h1>
+            <Header title={user.userName}/>
+            <Main>
+                <Avatar src={user.avatarUrl} alt=""/>
+            </Main>
             <Navbar user={user}/>
         </Page>
     )
