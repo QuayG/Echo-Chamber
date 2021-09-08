@@ -115,8 +115,6 @@ class AuthControllerTest {
         return headers;
     }
 
-/*
-    Internal Server Error 500 ???
     @Test
     public void noCredentials(){
         // Given
@@ -129,6 +127,5 @@ class AuthControllerTest {
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
-    }*/
-
+    }
 }
