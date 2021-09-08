@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@Getter
-@Setter
 public class UserService {
     private UserRepository userRepository;
 
@@ -20,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<UserEntity> find(String name){
+    public Optional<UserEntity> findByUserName(String name){
         return userRepository.findByUserName(name);
     }
 
