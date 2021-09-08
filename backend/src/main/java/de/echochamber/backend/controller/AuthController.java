@@ -54,7 +54,7 @@ public class AuthController {
 
     @Operation(summary = "Get logged in authentication principal")
     @GetMapping(value = "/auth/me", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getLoggedInUser(@AuthenticationPrincipal UserEntity userEntity){
+    public ResponseEntity<User> getLoggedInUser(@AuthenticationPrincipal UserEntity userEntity) {
         return ok(
                 User.builder()
                         .userName(userEntity.getUserName()).build()
@@ -67,23 +67,26 @@ public class AuthController {
             @ApiResponse(code = SC_BAD_REQUEST, message = "Username or password is blank"),
             @ApiResponse(code = SC_UNAUTHORIZED, message = "Invalid credentials")
     })
-    public ResponseEntity<AccessToken> getAccessToken(@RequestBody Credentials credentials){
-        String username = credentials.getUsername();
-        hasText(username, "Username must not be blank to get token");
-        String password = credentials.getPassword();
-        hasText(password, "Password must not be blank to get token");
-
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+    public ResponseEntity<AccessToken> getAccessToken(@RequestBody Credentials credentials) {
 
         try {
+            String username = credentials.getUsername();
+            hasText(username, "Username must not be blank to get token");
+            String password = credentials.getPassword();
+            hasText(password, "Password must not be blank to get token");
+
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+
             authenticationManager.authenticate(authToken);
 
-            UserEntity userEntity = userService.find(username).orElseThrow();
+            UserEntity userEntity = userService.findByUserName(username).orElseThrow();
             String token = jwtService.createJwtToken(userEntity);
 
             AccessToken accessToken = new AccessToken(token);
             return ok(accessToken);
-        }catch (AuthenticationException e){
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (AuthenticationException e) {
             return new ResponseEntity<>(UNAUTHORIZED);
         }
     }

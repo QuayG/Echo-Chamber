@@ -20,8 +20,6 @@ import static de.echochamber.backend.controller.UserController.USER_CONTROLLER_T
 )
 @RestController
 @RequestMapping("/user")
-@Getter
-@Setter
 public class UserController {
     public static final String USER_CONTROLLER_TAG = "User";
 

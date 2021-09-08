@@ -63,7 +63,7 @@ class AuthControllerTest {
         String password = "aaa";
         String role = "user";
         String hashedPassword = passwordEncoder.encode(password);
-        userRepository.save(
+        userRepository.saveAndFlush(
                 UserEntity.builder()
                         .firstName(firstName)
                         .lastName(lastName)
