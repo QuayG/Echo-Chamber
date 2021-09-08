@@ -6,6 +6,7 @@ import TextField from "../components/TextField";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import Page from "../components/Page";
+import Navbar from "../components/Navbar";
 
 const initialState = {
     username: '',
@@ -26,7 +27,9 @@ export default function Login() {
         setCredentials({...credentials, [event.target.name]: event.target.value})
 
     if (user) {
+        console.log(user)
         return <Redirect to="/"/>
+
     }
 
     return (
@@ -48,6 +51,7 @@ export default function Login() {
                 />
                 <Button>Login</Button>
             </Main>
+            <Navbar user={user}/>
         </Page>
     )
 }

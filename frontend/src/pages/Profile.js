@@ -2,6 +2,7 @@ import {Redirect} from "react-router-dom";
 import {useAuth} from "../auth/AuthProvider";
 import Page from "../components/Page";
 import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 
 export default function Profile() {
 
@@ -13,8 +14,9 @@ export default function Profile() {
 
     return (
         <Page>
-            <Header title="Profile"/>
+            <Header title={user.username}/>
             <h1>This will once be the profile page</h1>
+            <Navbar user={user}/>
         </Page>
     )
 }
