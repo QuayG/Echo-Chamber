@@ -1,0 +1,9 @@
+profile:
+  datasource:
+    url: postgresql://echo-chamber-postgres:5432/echo-chamber
+    user: admin
+    pass: aaa
+
+echochamber:
+  user-service:
+    avatar-url: "http://docker.de"

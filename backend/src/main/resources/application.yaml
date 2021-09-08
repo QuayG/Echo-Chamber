@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: @spring.profiles.active@
+  application:
+    name: echo-chamber
+  datasource:
+    url: jdbc:${profile.datasource.url}
+    username: ${profile.datasource.user}
+    password: ${profile.datasource.pass}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+    hibernate:
+      ddl-auto: update
+
+server:
+  servlet:
+    context-path: "/api/${spring.application.name}"
+
+
+security:
+  jwt:
+    secret: "super-secret"
+    expiresAfterMinutes: 30

@@ -1,0 +1,20 @@
+version: "2.1"
+
+services:
+  echo-chamber-postgres:
+    image: postgres:12.4
+    container_name: echo-chamber-postgres
+    #mem-limit: 50m
+    environment:
+      POSTGRES_PASSWORD: "aaa"
+      POSTGRES_USER: "admin"
+      POSTGRES_DB: "echo-chamber"
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - local-bridge
+
+networks:
+  local-bridge: #default network
+    driver: bridge
