@@ -1,9 +1,13 @@
+import {NavLink} from "react-router-dom";
 import styled from "styled-components/macro";
 
 export default function Navbar({user, ...props}){
     return(
         <Wrapper {...props}>
-
+            <NavLink exact to="/">Profile</NavLink>
+            <NavLink to="/logout">Logout</NavLink>
+            <NavLink to="/polls">Polls</NavLink>
+            <NavLink to="/echo">Echo-Chambers</NavLink>
         </Wrapper>
     )
 }
