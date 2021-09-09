@@ -6,7 +6,9 @@ import Button from "../components/Button";
 import {createUser} from "../service/api-service";
 
 const initialState ={
-    username: '',
+    userName: '',
+    firstName: '',
+    lastName: '',
     password: '',
     repeatedPassword: '',
 }
@@ -32,7 +34,21 @@ export default function Register(){
                 <TextField
                 title="Username"
                 name="username"
-                value={newUserInput.username}
+                value={newUserInput.userName}
+                onChange={handleNewUserInputChange}
+                />
+                <TextField
+                title="First Name"
+                name="firstName"
+                type="firstName"
+                value={newUserInput.firstName}
+                onChange={handleNewUserInputChange}
+                />
+                <TextField
+                title="Last Name"
+                name="lastName"
+                type="lastName"
+                value={newUserInput.lastName}
                 onChange={handleNewUserInputChange}
                 />
                 <TextField
