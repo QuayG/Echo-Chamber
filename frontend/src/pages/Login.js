@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Redirect} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {useAuth} from "../auth/AuthProvider";
 import Main from "../components/Main";
 import TextField from "../components/TextField";
@@ -49,6 +49,7 @@ export default function Login() {
                     onChange={handleCredentialsChanged}
                 />
                 <Button>Login</Button>
+                <NavLink to="/register">Register</NavLink>
             </Main>
         </Page>
     )
