@@ -31,7 +31,7 @@ export default function Register(){
             lastName: newUserInput.lastName,
             password: newUserInput.password
         }
-        createUser(user).then(response => console.log(response))
+        createUser(user)
     }
 
     return(
