@@ -19,6 +19,9 @@ export default function Register(){
         setNewUserInput({...newUserInput, [event.target.name]: event.target.value})
     }
 
+    const passwordsMatch =
+        newUserInput.password === newUserInput.repeatedPassword
+
     const handleSubmit = () => {
         createUser(newUserInput)
     }
@@ -35,16 +38,18 @@ export default function Register(){
                 <TextField
                 title="Password"
                 name="password"
+                type="password"
                 value={newUserInput.password}
                 onChange={handleNewUserInputChange}
                 />
                 <TextField
                 title="Repeat password"
                 name="repeatedPassword"
+                type="password"
                 value={newUserInput.repeatedPassword}
                 onChange={handleNewUserInputChange}
                 />
-                <Button>Register</Button>
+                <Button disabled={!passwordsMatch}>Register</Button>
             </Main>
         </Page>
     )
