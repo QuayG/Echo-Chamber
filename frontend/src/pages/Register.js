@@ -25,7 +25,13 @@ export default function Register(){
         newUserInput.password === newUserInput.repeatedPassword
 
     const handleSubmit = () => {
-        createUser(newUserInput)
+        const user = {
+            userName: newUserInput.userName,
+            firstName: newUserInput.firstName,
+            lastName: newUserInput.lastName,
+            password: newUserInput.password
+        }
+        createUser(user).then(response => console.log(response))
     }
 
     return(
@@ -33,7 +39,7 @@ export default function Register(){
             <Main as="form" onSubmit={handleSubmit}>
                 <TextField
                 title="Username"
-                name="username"
+                name="userName"
                 value={newUserInput.userName}
                 onChange={handleNewUserInputChange}
                 />
