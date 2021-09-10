@@ -5,6 +5,7 @@ import {useState} from "react";
 import Button from "../components/Button";
 import {createUser} from "../service/api-service";
 import {Redirect} from "react-router-dom";
+import Error from "../components/Error";
 
 const initialState ={
     userName: '',
@@ -18,6 +19,7 @@ export default function Register(){
 
     const [newUserInput, setNewUserInput] = useState(initialState)
     const [createdUser, setCreatedUser] = useState(false)
+    const [error, setError] = useState()
 
     const handleNewUserInputChange = event => {
         setNewUserInput({...newUserInput, [event.target.name]: event.target.value})
@@ -34,7 +36,9 @@ export default function Register(){
             lastName: newUserInput.lastName,
             password: newUserInput.password
         }
-        createUser(user).then(()=>setCreatedUser(user))
+        createUser(user).then(()=>setCreatedUser(user)).catch(error=>{
+            setError(error)
+        })
     }
 
     if (createdUser){
@@ -80,6 +84,7 @@ export default function Register(){
                 />
                 <Button disabled={!passwordsMatch}>Register</Button>
             </Main>
+            {error && <Error>{error.message}</Error>}
         </Page>
     )
 }
