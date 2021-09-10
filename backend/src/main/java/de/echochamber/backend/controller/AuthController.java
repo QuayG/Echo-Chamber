@@ -69,7 +69,6 @@ public class AuthController {
     })
     public ResponseEntity<AccessToken> getAccessToken(@RequestBody Credentials credentials) {
 
-        try {
             String username = credentials.getUsername();
             hasText(username, "Username must not be blank to get token");
             String password = credentials.getPassword();
@@ -84,10 +83,5 @@ public class AuthController {
 
             AccessToken accessToken = new AccessToken(token);
             return ok(accessToken);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (AuthenticationException e) {
-            return new ResponseEntity<>(UNAUTHORIZED);
-        }
     }
 }
