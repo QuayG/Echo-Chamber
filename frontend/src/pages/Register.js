@@ -4,6 +4,7 @@ import TextField from "../components/TextField";
 import {useState} from "react";
 import Button from "../components/Button";
 import {createUser} from "../service/api-service";
+import {Redirect} from "react-router-dom";
 
 const initialState ={
     userName: '',
@@ -16,6 +17,7 @@ const initialState ={
 export default function Register(){
 
     const [newUserInput, setNewUserInput] = useState(initialState)
+    const [createdUser, setCreatedUser] = useState(false)
 
     const handleNewUserInputChange = event => {
         setNewUserInput({...newUserInput, [event.target.name]: event.target.value})
@@ -24,14 +26,19 @@ export default function Register(){
     const passwordsMatch =
         newUserInput.password === newUserInput.repeatedPassword
 
-    const handleSubmit = () => {
+    const handleSubmit = event => {
+        event.preventDefault()
         const user = {
             userName: newUserInput.userName,
             firstName: newUserInput.firstName,
             lastName: newUserInput.lastName,
             password: newUserInput.password
         }
-        createUser(user)
+        createUser(user).then(()=>setCreatedUser(user))
+    }
+
+    if (createdUser){
+        return <Redirect to="/"/>
     }
 
     return(

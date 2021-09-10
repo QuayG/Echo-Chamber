@@ -2,6 +2,7 @@ package de.echochamber.backend.service;
 
 import de.echochamber.backend.model.UserEntity;
 import de.echochamber.backend.repo.UserRepository;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import static org.springframework.util.StringUtils.hasText;
 
 @Service
+@Getter
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -37,7 +39,8 @@ public class UserService {
         String hashedPassword = passwordEncoder.encode(newUserEntity.getPassword());
 
         return userRepository.save(newUserEntity.toBuilder()
-                .password(hashedPassword).build());
+                .password(hashedPassword)
+                .role("user").build());
     }
 
     private void checkUserNameExists(String username){
