@@ -9,13 +9,13 @@ export default function App() {
         <AuthProvider>
             <Router>
                 <Switch>
-                    <Route path="/login">
+                    <Route exact path="/">
                         <Login/>
                     </Route>
                     <Route path="/register">
                         <Register/>
                     </Route>
-                    <Route exact path="/">
+                    <Route path="/main_menu">
                         <Profile/>
                     </Route>
                 </Switch>

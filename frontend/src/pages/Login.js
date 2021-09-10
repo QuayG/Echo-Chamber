@@ -26,14 +26,12 @@ export default function Login() {
         setCredentials({...credentials, [event.target.name]: event.target.value})
 
     if (user) {
-        console.log(user)
-        return <Redirect to="/"/>
-
+        return <Redirect to="/main_menu"/>
     }
 
     return (
         <Page>
-            <Header title="Login"/>
+            <Header title="Welcome"/>
             <Main as="form" onSubmit={handleSubmit}>
                 <TextField
                     title="Username"
