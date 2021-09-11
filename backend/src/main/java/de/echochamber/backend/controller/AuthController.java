@@ -76,12 +76,16 @@ public class AuthController {
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
 
-            authenticationManager.authenticate(authToken);
+            try {
+                authenticationManager.authenticate(authToken);
 
-            UserEntity userEntity = userService.findByUserName(username).orElseThrow();
-            String token = jwtService.createJwtToken(userEntity);
+                UserEntity userEntity = userService.findByUserName(username).orElseThrow();
+                String token = jwtService.createJwtToken(userEntity);
 
-            AccessToken accessToken = new AccessToken(token);
-            return ok(accessToken);
+                AccessToken accessToken = new AccessToken(token);
+                return ok(accessToken);
+            }catch (AuthenticationException e){
+                return new ResponseEntity<>(UNAUTHORIZED);
+            }
     }
 }

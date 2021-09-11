@@ -102,7 +102,7 @@ class AuthControllerTest {
         // When
         HttpEntity<Credentials> httpEntity = new HttpEntity<>(credentials,getHttpHeaders());
         ResponseEntity<AccessToken> response = testRestTemplate
-                .postForEntity(url(), httpEntity, AccessToken.class);
+                .postForEntity(url(), credentials, AccessToken.class);
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
