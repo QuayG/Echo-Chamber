@@ -6,6 +6,7 @@ import TextField from "../components/TextField";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import Page from "../components/Page";
+import Error from "../components/Error";
 
 const initialState = {
     username: '',
@@ -16,10 +17,13 @@ export default function Login() {
 
     const {login, user} = useAuth()
     const [credentials, setCredentials] = useState(initialState)
+    const [error, setError] = useState()
 
     const handleSubmit = event => {
         event.preventDefault()
-        login(credentials)
+        login(credentials).catch(error=>{
+            setError(error)
+        })
     }
 
     const handleCredentialsChanged = event =>
@@ -49,6 +53,7 @@ export default function Login() {
                 <Button>Login</Button>
                 <NavLink to="/register">Register</NavLink>
             </Main>
+            {error && <Error>{error.message}</Error>}
         </Page>
     )
 }

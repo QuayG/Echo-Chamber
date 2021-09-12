@@ -69,7 +69,6 @@ public class AuthController {
     })
     public ResponseEntity<AccessToken> getAccessToken(@RequestBody Credentials credentials) {
 
-        try {
             String username = credentials.getUsername();
             hasText(username, "Username must not be blank to get token");
             String password = credentials.getPassword();
@@ -77,17 +76,16 @@ public class AuthController {
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
 
-            authenticationManager.authenticate(authToken);
+            try {
+                authenticationManager.authenticate(authToken);
 
-            UserEntity userEntity = userService.findByUserName(username).orElseThrow();
-            String token = jwtService.createJwtToken(userEntity);
+                UserEntity userEntity = userService.findByUserName(username).orElseThrow();
+                String token = jwtService.createJwtToken(userEntity);
 
-            AccessToken accessToken = new AccessToken(token);
-            return ok(accessToken);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (AuthenticationException e) {
-            return new ResponseEntity<>(UNAUTHORIZED);
-        }
+                AccessToken accessToken = new AccessToken(token);
+                return ok(accessToken);
+            }catch (AuthenticationException e){
+                return new ResponseEntity<>(UNAUTHORIZED);
+            }
     }
 }
