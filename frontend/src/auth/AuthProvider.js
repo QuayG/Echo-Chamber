@@ -17,10 +17,12 @@ export default function AuthProvider({children}) {
         role: claims.role,
     }
 
+    const logout = () => setToken()
+
     const login = credentials => getToken(credentials).then(setToken)
 
     return(
-        <AuthContext.Provider value={{token, user, login}}>
+        <AuthContext.Provider value={{token, user, login, logout}}>
             {children}
         </AuthContext.Provider>
     )

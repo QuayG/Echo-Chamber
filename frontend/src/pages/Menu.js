@@ -6,17 +6,17 @@ import Navbar from "../components/Navbar";
 import Main from "../components/Main";
 import Avatar from "../components/Avatar";
 
-export default function Profile() {
+export default function Menu() {
 
     const {user} = useAuth()
 
     if (!user) {
-        return <Redirect to="/login"/>
+        return <Redirect to="/"/>
     }
 
     return (
         <Page>
-            <Header title={user.userName}/>
+            <Header title="Menu"/>
             <Main>
                 <Avatar src={user.avatarUrl} alt=""/>
             </Main>
