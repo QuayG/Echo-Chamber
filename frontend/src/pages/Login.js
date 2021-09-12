@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import Page from "../components/Page";
 import Error from "../components/Error";
+import Loading from "../components/Loading";
 
 const initialState = {
     username: '',
@@ -17,12 +18,16 @@ export default function Login() {
 
     const {login, user} = useAuth()
     const [credentials, setCredentials] = useState(initialState)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
 
     const handleSubmit = event => {
         event.preventDefault()
-        login(credentials).catch(error=>{
+        setError()
+        setLoading(true)
+        login(credentials).catch(error => {
             setError(error)
+            setLoading(false)
         })
     }
 
@@ -36,23 +41,26 @@ export default function Login() {
     return (
         <Page>
             <Header title="Welcome"/>
-            <Main as="form" onSubmit={handleSubmit}>
-                <TextField
-                    title="Username"
-                    name="username"
-                    value={credentials.username}
-                    onChange={handleCredentialsChanged}
-                />
-                <TextField
-                    title="Password"
-                    name="password"
-                    type="password"
-                    value={credentials.password}
-                    onChange={handleCredentialsChanged}
-                />
-                <Button>Login</Button>
-                <NavLink to="/register">Register</NavLink>
-            </Main>
+            {loading && <Loading/>}
+            {!loading && (
+                <Main as="form" onSubmit={handleSubmit}>
+                    <TextField
+                        title="Username"
+                        name="username"
+                        value={credentials.username}
+                        onChange={handleCredentialsChanged}
+                    />
+                    <TextField
+                        title="Password"
+                        name="password"
+                        type="password"
+                        value={credentials.password}
+                        onChange={handleCredentialsChanged}
+                    />
+                    <Button>Login</Button>
+                    <NavLink to="/register">Register</NavLink>
+                </Main>
+            )}
             {error && <Error>{error.message}</Error>}
         </Page>
     )
