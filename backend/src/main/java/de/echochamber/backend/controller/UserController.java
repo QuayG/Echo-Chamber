@@ -21,11 +21,8 @@ import static javax.servlet.http.HttpServletResponse.SC_CONFLICT;
 import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
-@Tag(name = USER_CONTROLLER_TAG, description = "Provides CRUD operations for a user")
-@Api(
-        tags = USER_CONTROLLER_TAG
-)
 @RestController
+@RequestMapping("user")
 public class UserController {
     public static final String USER_CONTROLLER_TAG = "User";
 
@@ -36,7 +33,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(value = "/user/register", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/register", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @ApiResponses(value = {
             @ApiResponse(code = SC_BAD_REQUEST, message = "Unable to create user with blank username"),
             @ApiResponse(code = SC_CONFLICT, message = "Username is not available. Please change username.")
