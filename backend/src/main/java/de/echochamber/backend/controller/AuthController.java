@@ -69,17 +69,17 @@ public class AuthController {
     })
     public ResponseEntity<AccessToken> getAccessToken(@RequestBody Credentials credentials) {
 
-            String username = credentials.getUsername();
-            hasText(username, "Username must not be blank to get token");
+            String userName = credentials.getUserName();
+            hasText(userName, "Username must not be blank to get token");
             String password = credentials.getPassword();
             hasText(password, "Password must not be blank to get token");
 
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userName, password);
 
             try {
                 authenticationManager.authenticate(authToken);
 
-                UserEntity userEntity = userService.findByUserName(username).orElseThrow();
+                UserEntity userEntity = userService.findByUserName(userName).orElseThrow();
                 String token = jwtService.createJwtToken(userEntity);
 
                 AccessToken accessToken = new AccessToken(token);

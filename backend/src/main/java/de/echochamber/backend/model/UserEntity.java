@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "rem_user")
+@Table(name = "echo_user")
 @Getter
 @Setter
 @Builder(toBuilder = true)
@@ -20,6 +20,8 @@ public class UserEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @OneToMany(mappedBy = "createdBy")
+    private Set<PollEntity> pollsCreated;
 
     @Column(name = "user_name", nullable = false)
     private String userName;
@@ -30,7 +32,7 @@ public class UserEntity {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "avatar_url")
@@ -38,7 +40,4 @@ public class UserEntity {
 
     @Column(name = "role")
     private String role;
-
-
-
 }
