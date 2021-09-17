@@ -1,6 +1,5 @@
 package de.echochamber.backend.model;
 
-import de.echochamber.backend.api.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,11 +19,11 @@ public class PollEntity {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "poll_id")
     private Set<AnswerEntity> answerEntities;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "poll_id")
     private Set<PossibleAnswerEntity> possibleAnswers;
 
@@ -35,7 +34,7 @@ public class PollEntity {
     @JoinColumn(name = "created_by", nullable = false)
     private UserEntity createdBy;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="poll_participants",
             joinColumns={@JoinColumn(name="poll_id")},
             inverseJoinColumns={@JoinColumn(name="user_id")})

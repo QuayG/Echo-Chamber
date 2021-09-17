@@ -3,7 +3,6 @@ package de.echochamber.backend.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,7 +19,7 @@ public class UserEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "createdBy")
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private Set<PollEntity> pollsCreated;
 
     @Column(name = "user_name", nullable = false)
