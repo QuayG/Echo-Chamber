@@ -6,10 +6,12 @@ export default createGlobalStyle`
     --background-dark: #111;
     --background-light: #222;
     --accent: #6729fa;
+    --accent-light: #8f6be8;
     --neutral-dark: #666;
     --neutral-light: #efefef;
     --error: var(--accent);
 
+    --size-xxs: 2px;
     --size-xs: 4px;
     --size-s: 8px;
     --size-m: 12px;

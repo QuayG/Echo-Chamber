@@ -10,10 +10,10 @@ export default function Header({title}){
     return(
         <Wrapper>
             {user && <Avatar src={user.avatarUrl} alt=""/>}
-            {!user && <div></div>}
-            <h1>{title}</h1>
+            {!user && <div/>}
+            <h3>{title}</h3>
             {user && <Button onClick={logout}>Logout</Button>}
-            {!user && <div></div>}
+            {!user && <div/>}
         </Wrapper>
     )
 }
@@ -22,12 +22,14 @@ const Wrapper = styled.header`
   width: 100%;
   padding: var(--size-m);
 
-  text-align: center;
+  justify-items: center;
+  align-items: center;
   display: grid;
   grid-template-columns: 30% 40% 30%;
   background: var(--background-dark);
   
   Button{
-    margin: var(--size-s) var(--size-s);
+    margin: var(--size-s);
+    padding: var(--size-s);
   }
 `
