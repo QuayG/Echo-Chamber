@@ -26,7 +26,7 @@ import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("polls")
+@RequestMapping("/polls")
 public class PollController {
     private final PollService pollsService;
     private final UserService userService;
@@ -131,7 +131,6 @@ public class PollController {
         for (int i = 0; i < poll.getPossibleAnswers().size(); i++) {
             PossibleAnswerEntity possibleAnswerEntity = new PossibleAnswerEntity();
             possibleAnswerEntity.setAnswer(poll.getPossibleAnswers().get(i));
-
             possibleAnswerEntities.add(possibleAnswerEntity);
         }
 
