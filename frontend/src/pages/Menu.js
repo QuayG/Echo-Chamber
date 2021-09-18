@@ -4,7 +4,6 @@ import Page from "../components/Page";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import Main from "../components/Main";
-import Avatar from "../components/Avatar";
 
 export default function Menu() {
 
@@ -18,7 +17,7 @@ export default function Menu() {
         <Page>
             <Header title="Menu"/>
             <Main>
-                <Avatar src={user.avatarUrl} alt=""/>
+                <h1>Hier könnte mal was stehen.</h1>
             </Main>
             <Navbar user={user}/>
         </Page>
