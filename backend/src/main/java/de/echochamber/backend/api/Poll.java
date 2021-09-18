@@ -1,12 +1,12 @@
 package de.echochamber.backend.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import de.echochamber.backend.model.PossibleAnswerEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -18,6 +18,9 @@ public class Poll {
 
     @ApiModelProperty(required = true, notes = "Set of possible answers")
     private List<String> possibleAnswers;
+
+    @ApiModelProperty(required = true, notes = "Set of given answers")
+    private Set<Answer> givenAnswers;
 
     @ApiModelProperty(required = true, notes = "The user who created the poll.")
     private User user;
