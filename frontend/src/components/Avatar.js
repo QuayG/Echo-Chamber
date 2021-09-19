@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 
 export default styled.img`
-  width: 80%;
+  width: 50%;
   flex-grow: 1;
   margin: 0 var(--size-l);
   text-align: center;
