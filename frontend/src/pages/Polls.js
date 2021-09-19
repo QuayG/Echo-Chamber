@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import {findAll} from "../service/api-service";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
+import AnswerList from "../components/AnswerList";
 
 const initialState = [
     {
@@ -49,11 +50,7 @@ export default function Polls() {
                 {polls && polls.map(poll => (
                     <li key={poll.title}>
                         <h3>{poll.title}</h3>
-                        <AnswerList>
-                            {poll.possibleAnswers && poll.possibleAnswers.map(answer => (
-                                <li key={answer}>{answer}</li>
-                            ))}
-                        </AnswerList>
+                        <AnswerList possibleAnswers={poll.possibleAnswers}/>
                         <p>No. of participants: {poll.givenAnswers.length}</p>
                         <p>Created by: {poll.user.userName}</p>
                     </li>
@@ -127,10 +124,4 @@ const PollsList = styled.ul`
     color: var(--accent);
   }
 
-`
-
-const AnswerList = styled.ul`
-  list-style-type: none;
-  margin: 1px;
-  align-items: center;
 `
