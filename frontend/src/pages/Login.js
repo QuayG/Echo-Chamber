@@ -10,7 +10,7 @@ import Error from "../components/Error";
 import Loading from "../components/Loading";
 
 const initialState = {
-    username: '',
+    userName: '',
     password: '',
 }
 
@@ -46,8 +46,8 @@ export default function Login() {
                 <Main as="form" onSubmit={handleSubmit}>
                     <TextField
                         title="Username"
-                        name="username"
-                        value={credentials.username}
+                        name="userName"
+                        value={credentials.userName}
                         onChange={handleCredentialsChanged}
                     />
                     <TextField

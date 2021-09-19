@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import {createUser} from "../service/api-service";
 import {Redirect} from "react-router-dom";
 import Error from "../components/Error";
+import Loading from "../components/Loading";
 
 const initialState ={
     userName: '',
@@ -19,6 +20,7 @@ export default function Register(){
 
     const [newUserInput, setNewUserInput] = useState(initialState)
     const [createdUser, setCreatedUser] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
 
     const handleNewUserInputChange = event => {
@@ -30,6 +32,8 @@ export default function Register(){
 
     const handleSubmit = event => {
         event.preventDefault()
+        setError()
+        setLoading(true)
         const user = {
             userName: newUserInput.userName,
             firstName: newUserInput.firstName,
@@ -38,6 +42,7 @@ export default function Register(){
         }
         createUser(user).then(()=>setCreatedUser(user)).catch(error=>{
             setError(error)
+            setLoading(false)
         })
     }
 
@@ -47,6 +52,8 @@ export default function Register(){
 
     return(
         <Page>
+            {loading && <Loading/>}
+            {!loading &&
             <Main as="form" onSubmit={handleSubmit}>
                 <TextField
                 title="Username"
@@ -84,6 +91,7 @@ export default function Register(){
                 />
                 <Button disabled={!passwordsMatch}>Register</Button>
             </Main>
+            }
             {error && <Error>{error.message}</Error>}
         </Page>
     )
