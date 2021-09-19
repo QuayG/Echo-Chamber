@@ -21,10 +21,9 @@ export default function Header({title}){
 const Wrapper = styled.header`
   width: 100%;
   padding: var(--size-m);
-
+  display: grid;
   justify-items: center;
   align-items: center;
-  display: grid;
   grid-template-columns: 30% 40% 30%;
   background: var(--background-dark);
   
