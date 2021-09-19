@@ -32,8 +32,8 @@ export default function Polls() {
             setLoading(true)
             findAll(token).then(setPolls).catch(error => {
                 setError(error)
+                setLoading(false)
             })
-            setLoading(false)
         }
     }, [token, user])
 
@@ -47,7 +47,7 @@ export default function Polls() {
             {loading && <Loading/>}
             {!loading &&
             <PollsList>
-                {polls && polls.map(poll => (
+                {polls.map(poll => (
                     <Poll poll={poll}/>
                 ))}
             </PollsList>
