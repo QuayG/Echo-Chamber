@@ -14,7 +14,12 @@ const initialState = [
     {
         title: "",
         givenAnswers: [],
-        possibleAnswers: [],
+        possibleAnswers: [
+            {
+                id: "",
+                possibleAnswer: "",
+            }
+        ],
         user: {},
     }
 ]

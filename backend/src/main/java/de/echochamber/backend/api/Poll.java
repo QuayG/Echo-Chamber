@@ -17,7 +17,7 @@ public class Poll {
     private String title;
 
     @ApiModelProperty(required = true, notes = "Set of possible answers")
-    private List<String> possibleAnswers;
+    private List<PossibleAnswer> possibleAnswers;
 
     @ApiModelProperty(required = true, notes = "Set of given answers")
     private Set<Answer> givenAnswers;
