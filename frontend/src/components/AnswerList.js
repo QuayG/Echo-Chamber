@@ -3,21 +3,24 @@ import styled from "styled-components/macro";
 export default function AnswerList({possibleAnswers}) {
     return (
         <Wrapper>
-            {possibleAnswers && possibleAnswers.map((answer, id) => (
+            {possibleAnswers.map((answer, id) => (
                 <li key={id}>{answer}</li>
             ))}
         </Wrapper>)
 }
 
 const Wrapper = styled.ul`
-  width: 260px;
-  margin: 0;
-  padding: 0;
+  width: 220px;
+  margin: 5px;
+  padding: 5px;
+  list-style: none;
 
   li {
+    border: 1px solid var(--accent);
+    border-radius: var(--size-s);
     display-inside: ruby;
     justify-content: center;
-    margin: 15px;
-    padding: 15px;
+    margin: 5px;
+    padding: 5px;
   }
 `

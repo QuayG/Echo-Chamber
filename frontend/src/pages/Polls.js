@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import {findAll} from "../service/api-service";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import Poll from "../components/Poll";
+import PollsList from "../components/PollsList";
 
 const initialState = [
     {
@@ -32,8 +32,8 @@ export default function Polls() {
             setLoading(true)
             findAll(token).then(setPolls).catch(error => {
                 setError(error)
-                setLoading(false)
             })
+            setLoading(false)
         }
     }, [token, user])
 
@@ -45,13 +45,7 @@ export default function Polls() {
         <Page>
             <Header title="Polls"/>
             {loading && <Loading/>}
-            {!loading &&
-            <PollsList>
-                {polls.map(poll => (
-                    <Poll poll={poll}/>
-                ))}
-            </PollsList>
-            }
+            {!loading && <PollsList polls={polls}/>}
             {error && <Error>{error}</Error>}
             <LinkStyled to="/create">Polls</LinkStyled>
             <Navbar/>
@@ -62,30 +56,11 @@ export default function Polls() {
 
 const LinkStyled = styled(Link)`
   text-decoration: none;
-  padding: var(--size-m);
+  padding: var(--size-s);
   background: var(--accent);
   border: 1px solid var(--accent);
   color: var(--neutral-light);
   font-size: 1em;
   border-radius: var(--size-s);
-  margin: 10px;
-`
-
-const PollsList = styled.ul`
-  padding: 0 5px;
-  height: 90%;
-  width: 90%;
-  display: flex;
-  list-style-type: none;
-  text-decoration: none;
-  color: var(--neutral-light);
-  font-size: 1em;
-  text-align: center;
-  align-content: center;
-  overflow-x: scroll;
-
-  li.active {
-    color: var(--accent);
-  }
-
+  margin: 1px;
 `
