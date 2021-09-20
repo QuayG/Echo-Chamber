@@ -3,8 +3,8 @@ import styled from "styled-components/macro";
 export default function AnswerList({possibleAnswers}) {
     return (
         <Wrapper>
-            {possibleAnswers.map((answer, index) => (
-                <li key={index}>{answer}</li>
+            {possibleAnswers.map((answer, id) => (
+                <li key={id}>{answer}</li>
             ))}
         </Wrapper>)
 }
