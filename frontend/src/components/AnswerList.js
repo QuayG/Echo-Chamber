@@ -4,7 +4,7 @@ export default function AnswerList({possibleAnswers}) {
     return (
         <Wrapper>
             {possibleAnswers.map((answer, id) => (
-                <li key={id}>{answer}</li>
+                <li key={id}>{answer.possibleAnswer}</li>
             ))}
         </Wrapper>)
 }

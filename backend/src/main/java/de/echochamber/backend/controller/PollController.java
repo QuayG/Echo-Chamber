@@ -2,6 +2,7 @@ package de.echochamber.backend.controller;
 
 import de.echochamber.backend.api.Answer;
 import de.echochamber.backend.api.Poll;
+import de.echochamber.backend.api.PossibleAnswer;
 import de.echochamber.backend.api.User;
 import de.echochamber.backend.model.AnswerEntity;
 import de.echochamber.backend.model.PollEntity;
@@ -106,12 +107,19 @@ public class PollController {
                 .role(pollEntity.getCreatedBy().getRole())
                 .avatarUrl(pollEntity.getCreatedBy().getAvatarUrl()).build();
 
-        List<String> possibleAnswerEntities = pollEntity.getPossibleAnswers().stream().map(answer -> answer.getAnswer()).toList();
+                List<PossibleAnswer> possibleAnswers = new ArrayList<>();
+        for (PossibleAnswerEntity possibleAnswerEntity: pollEntity.getPossibleAnswers()) {
+            PossibleAnswer possibleAnswer = PossibleAnswer.builder()
+                    .possibleAnswer(possibleAnswerEntity.getAnswer())
+                    .id(possibleAnswerEntity.getId()).build();
+            possibleAnswers.add(possibleAnswer);
+        }
+
         Set<Answer> answers = map(pollEntity.getAnswerEntities());
         return Poll.builder()
                 .title(pollEntity.getTitle())
                 .user(user)
-                .possibleAnswers(possibleAnswerEntities)
+                .possibleAnswers(possibleAnswers)
                 .givenAnswers(answers).build();
     }
 
@@ -130,7 +138,7 @@ public class PollController {
 
         for (int i = 0; i < poll.getPossibleAnswers().size(); i++) {
             PossibleAnswerEntity possibleAnswerEntity = new PossibleAnswerEntity();
-            possibleAnswerEntity.setAnswer(poll.getPossibleAnswers().get(i));
+            possibleAnswerEntity.setAnswer(poll.getPossibleAnswers().get(i).getPossibleAnswer());
             possibleAnswerEntities.add(possibleAnswerEntity);
         }
 

@@ -2,6 +2,7 @@ package de.echochamber.backend.controller;
 
 import de.echochamber.backend.api.Answer;
 import de.echochamber.backend.api.Poll;
+import de.echochamber.backend.api.PossibleAnswer;
 import de.echochamber.backend.api.User;
 import de.echochamber.backend.config.JwtConfig;
 import de.echochamber.backend.model.AnswerEntity;
@@ -106,9 +107,14 @@ class PollControllerTest {
     @DisplayName("The create method should persist and return a new poll")
     public void createNewPollTest() {
         // Given
-        List<String> possibleAnswerEntities = new ArrayList<>();
-        possibleAnswerEntities.add("Sure!");
-        possibleAnswerEntities.add("Who doesn't?");
+        List<PossibleAnswer> possibleAnswers = new ArrayList<>();
+        PossibleAnswer first = PossibleAnswer.builder()
+                .possibleAnswer("Sure!").build();
+        PossibleAnswer second = PossibleAnswer.builder()
+                .possibleAnswer("Who doesn't").build();
+
+        possibleAnswers.add(first);
+        possibleAnswers.add(second);
 
         Set<Answer> answers = new HashSet<>();
 
@@ -119,7 +125,7 @@ class PollControllerTest {
         Poll poll = Poll.builder()
                 .title("Do you like polls?")
                 .user(user)
-                .possibleAnswers(possibleAnswerEntities)
+                .possibleAnswers(possibleAnswers)
                 .givenAnswers(answers).build();
 
         Map<String, Object> claims = new HashMap<>();
@@ -156,9 +162,13 @@ class PollControllerTest {
     public void createPollWithExistingTitleTest() {
         // Given
         String title = "Is the banana crooked?";
-        List<String> possibleAnswers = new ArrayList<>();
-        possibleAnswers.add("Yes!");
-        possibleAnswers.add("No!");
+        List<PossibleAnswer> possibleAnswers = new ArrayList<>();
+        PossibleAnswer first = PossibleAnswer.builder()
+                .possibleAnswer("Yes!").build();
+        PossibleAnswer second = PossibleAnswer.builder()
+                .possibleAnswer("No!").build();
+        possibleAnswers.add(first);
+        possibleAnswers.add(second);
 
         User user = User.builder()
                 .userName("TestUser").build();
@@ -201,9 +211,13 @@ class PollControllerTest {
         // Given
         String title = "";
 
-        List<String> possibleAnswers = new ArrayList<>();
-        possibleAnswers.add("Yes!");
-        possibleAnswers.add("No!");
+        List<PossibleAnswer> possibleAnswers = new ArrayList<>();
+        PossibleAnswer first = PossibleAnswer.builder()
+                .possibleAnswer("Yes!").build();
+        PossibleAnswer second = PossibleAnswer.builder()
+                .possibleAnswer("No!").build();
+        possibleAnswers.add(first);
+        possibleAnswers.add(second);
 
         User user = User.builder()
                 .userName("TestUser").build();
@@ -244,8 +258,10 @@ class PollControllerTest {
         // Given
         String title = "Do you like polls";
 
-        List<String> possibleAnswers = new ArrayList<>();
-        possibleAnswers.add("Yes!");
+        List<PossibleAnswer> possibleAnswers = new ArrayList<>();
+        PossibleAnswer first = PossibleAnswer.builder()
+                .possibleAnswer("Yes!").build();
+        possibleAnswers.add(first);
 
         User user = User.builder()
                 .userName("TestUser").build();
