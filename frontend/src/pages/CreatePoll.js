@@ -6,11 +6,11 @@ import Button from "../components/Button";
 import {createPoll} from "../service/api-service";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import AnswerList from "../components/AnswerList";
 import Navbar from "../components/Navbar";
 import styled from "styled-components/macro";
 import {useAuth} from "../auth/AuthProvider";
 import {Redirect} from "react-router-dom";
+import PossibleAnswerList from "../components/PossibleAnswerList";
 
 export default function CreatePoll() {
 
@@ -25,17 +25,18 @@ export default function CreatePoll() {
         const poll = {
             title: pollTitle,
             user: user,
-            possibleAnswers: possibleAnswers
+            possibleAnswers: possibleAnswers,
+            participants: [],
         }
         event.preventDefault()
         setError()
         setLoading(true)
-        createPoll(poll, token).catch(error => {
-            setError(error)
-        })
-        setLoading(false)
+        createPoll(poll, token)
+            .catch(error => setError(error))
+            .finally(()=>setLoading(false))
         setPollTitle('')
         setAnswerToAdd('')
+        setPossibleAnswers([])
     }
 
     const handleTitleInputChange = event => {
@@ -44,11 +45,14 @@ export default function CreatePoll() {
 
     const handleAnswerToAddInputChange = event => {
         setAnswerToAdd(event.target.value)
+        console.log("aaa")
     }
 
-    const addPossibleAnswer = () => {
-        setPossibleAnswers([...possibleAnswers, answerToAdd])
+    const addPossibleAnswer = event => {
+        event.preventDefault()
+        setPossibleAnswers([...possibleAnswers, {possibleAnswer: answerToAdd}])
         setAnswerToAdd('')
+        console.log("bbb")
     }
 
     if (!user) {
@@ -68,7 +72,7 @@ export default function CreatePoll() {
                     onChange={handleTitleInputChange}
                 />
 
-                <AnswerList possibleAnswers={possibleAnswers}/>
+                <PossibleAnswerList possibleAnswers={possibleAnswers}/>
 
                 <TextField
                     title="Answer to add"
@@ -96,8 +100,8 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   overflow-y: scroll;
-  
-  Button{
+
+  Button {
     margin: 12px;
   }
 `
