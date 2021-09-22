@@ -2,8 +2,6 @@ package de.echochamber.backend.controller;
 
 import de.echochamber.backend.api.Answer;
 import de.echochamber.backend.api.Poll;
-import de.echochamber.backend.api.PossibleAnswer;
-import de.echochamber.backend.api.User;
 import de.echochamber.backend.model.AnswerEntity;
 import de.echochamber.backend.model.PollEntity;
 import de.echochamber.backend.model.PossibleAnswerEntity;
@@ -32,12 +30,14 @@ public class PollController {
     private final PollService pollsService;
     private final UserService userService;
     private final AnswerService answerService;
+    private final Mapper mapper;
 
     @Autowired
-    public PollController(PollService pollsService, UserService userService, AnswerService answerService) {
+    public PollController(PollService pollsService, UserService userService, AnswerService answerService, Mapper mapper) {
         this.pollsService = pollsService;
         this.userService = userService;
         this.answerService = answerService;
+        this.mapper = mapper;
     }
 
     @PostMapping(value = "/create", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
@@ -46,11 +46,11 @@ public class PollController {
             @ApiResponse(code = SC_CONFLICT, message = "Title already exists")
     })
     public ResponseEntity<Poll> createPoll(@RequestBody Poll newPoll) {
-        PollEntity pollEntity = map(newPoll);
+        PollEntity pollEntity = mapper.map(newPoll);
 
         PollEntity createdPollEntity = pollsService.create(pollEntity);
 
-        return ok(map(createdPollEntity));
+        return ok(mapper.map(createdPollEntity));
     }
 
     @PostMapping(value = "/answer/{answerId}")
@@ -66,64 +66,43 @@ public class PollController {
                     .chosenAnswer(possibleAnswerEntity)
                     .user(userEntityOptional.get())
                     .build();
-            return ok(map(pollsService.giveAnswer(givenAnswer)));
+            return ok(mapper.map(pollsService.giveAnswer(givenAnswer)));
         }
         throw new EntityNotFoundException("User not found");
     }
 
-    @GetMapping
+    @GetMapping(value ="/all")
     public ResponseEntity<List<Poll>> findAll() {
         List<PollEntity> pollEntities = pollsService.findAll();
-        return ok(map(pollEntities));
+        return ok(mapper.map(pollEntities));
     }
 
-    private List<Poll> map(List<PollEntity> pollEntities) {
-        List<Poll> polls = new ArrayList<>();
-        for (PollEntity pollEntity : pollEntities) {
-            polls.add(map(pollEntity));
-        }
-        return polls;
-    }
-
-    private Answer map(AnswerEntity answerEntity) {
-        return Answer.builder()
-                .answer(answerEntity.getChosenAnswer().getAnswer())
-                .user(map(answerEntity.getUser())).build();
-    }
-
-    private User map(UserEntity userEntity) {
-        return User.builder()
-                .userName(userEntity.getUserName())
-                .firstName(userEntity.getFirstName())
-                .lastName(userEntity.getLastName())
-                .avatarUrl(userEntity.getAvatarUrl()).build();
-    }
-
-    private Poll map(PollEntity pollEntity) {
-        User user = User.builder()
-                .userName(pollEntity.getCreatedBy().getUserName())
-                .firstName(pollEntity.getCreatedBy().getFirstName())
-                .lastName(pollEntity.getCreatedBy().getLastName())
-                .role(pollEntity.getCreatedBy().getRole())
-                .avatarUrl(pollEntity.getCreatedBy().getAvatarUrl()).build();
-
-                List<PossibleAnswer> possibleAnswers = new ArrayList<>();
-        for (PossibleAnswerEntity possibleAnswerEntity: pollEntity.getPossibleAnswers()) {
-            PossibleAnswer possibleAnswer = PossibleAnswer.builder()
-                    .possibleAnswer(possibleAnswerEntity.getAnswer())
-                    .id(possibleAnswerEntity.getId()).build();
-            possibleAnswers.add(possibleAnswer);
+    @GetMapping(value = "/open")
+    public ResponseEntity<Set<Poll>> findOpenPolls(@AuthenticationPrincipal UserEntity authUser){
+        Optional<UserEntity> userEntity = userService.findByUserName(authUser.getUserName());
+        if (userEntity.isEmpty()){
+            throw new EntityNotFoundException("User not found");
         }
 
-        Set<Answer> answers = map(pollEntity.getAnswerEntities());
-        return Poll.builder()
-                .title(pollEntity.getTitle())
-                .user(user)
-                .possibleAnswers(possibleAnswers)
-                .givenAnswers(answers).build();
+        Set<Optional<PollEntity>> openPollsOptional = pollsService.findAllByParticipantsNotContaining(userEntity.get());
+        Set<PollEntity> pollEntities = new HashSet<>();
+        for (Optional<PollEntity> pollOptional: openPollsOptional) {
+            if (pollOptional.isEmpty()){
+                throw new EntityNotFoundException("Poll not found");
+            }
+                pollEntities.add(pollOptional.get());
+        }
+        return ok(mapper.mapOpenPolls(pollEntities));
     }
+/*    private Set<User> mapParticipants(Set<UserEntity> participantEntities) {
+        Set<User> participants = new HashSet<>();
+        for (UserEntity userEntity : participantEntities) {
+            participants.add(map(userEntity));
+        }
+        return participants;
+    }*/
 
-    private Set<Answer> map(Set<AnswerEntity> answerEntities) {
+/*    private Set<Answer> map(Set<AnswerEntity> answerEntities) {
         Set<Answer> answers = new HashSet<>();
         for (AnswerEntity answerEntity : answerEntities) {
             Answer answer = Answer.builder()
@@ -131,33 +110,7 @@ public class PollController {
             answers.add(answer);
         }
         return answers;
-    }
-
-    private PollEntity map(Poll poll) {
-        Set<PossibleAnswerEntity> possibleAnswerEntities = new HashSet<>();
-
-        for (int i = 0; i < poll.getPossibleAnswers().size(); i++) {
-            PossibleAnswerEntity possibleAnswerEntity = new PossibleAnswerEntity();
-            possibleAnswerEntity.setAnswer(poll.getPossibleAnswers().get(i).getPossibleAnswer());
-            possibleAnswerEntities.add(possibleAnswerEntity);
-        }
-
-        UserEntity userEntity = map(poll.getUser());
-
-        return PollEntity.builder()
-                .title(poll.getTitle())
-                .possibleAnswers(possibleAnswerEntities)
-                .answerEntities(new HashSet<>())
-                .createdBy(userEntity).build();
-    }
-
-    private UserEntity map(User user) {
-        Optional<UserEntity> userEntityOptional = userService.findByUserName(user.getUserName());
-        if (userEntityOptional.isPresent()) {
-            return userEntityOptional.get();
-        }
-        throw new EntityNotFoundException("User not found");
-    }
+    }*/
 }
 
 
