@@ -19,6 +19,8 @@ spring:
       ddl-auto: update
 
 server:
+  error:
+    include-message: always
   servlet:
     context-path: "/api/${spring.application.name}"
 

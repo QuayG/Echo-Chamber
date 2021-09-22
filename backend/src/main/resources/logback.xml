@@ -6,12 +6,12 @@
         </encoder>
     </appender>
 
-    <logger name="org.springframework.security" level="INFO"/>
+    <logger name="org.springframework.security" level="DEBUG"/>
     <logger name="org.springframework" level="INFO"/>
 
     <!-- Set level = DEBUG to get feign http output -->
 
-    <logger name="de.echochamber.backend" level="INFO"/>
+    <logger name="de.echochamber.backend" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
