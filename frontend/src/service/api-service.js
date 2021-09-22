@@ -25,5 +25,16 @@ export const createPoll = (poll, token) => {
 
 export const findAll = (token) =>
     axios
-        .get('api/echo-chamber/polls', getAuthHeaders(token))
+        .get('api/echo-chamber/polls/all', getAuthHeaders(token))
         .then(response => response.data)
+
+export const findOpenPolls = (token) =>
+    axios
+        .get('api/echo-chamber/polls/open', getAuthHeaders(token))
+        .then(response => response.data)
+
+export const giveAnswer = (selectedAnswerId, token) => {
+    return axios
+        .post(`/api/echo-chamber/polls/answer/${selectedAnswerId}`, null, getAuthHeaders(token))
+        .then(response => response.data)
+}
