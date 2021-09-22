@@ -19,7 +19,7 @@ export const createUser = newUserInput =>
 
 export const createPoll = (poll, token) => {
     return axios
-        .post('/api/echo-chamber/polls/create', poll, getAuthHeaders(token))
+        .post('/api/echo-chamber/polls/', poll, getAuthHeaders(token))
         .then(response => response.data)
 }
 

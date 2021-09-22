@@ -26,31 +26,32 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/polls")
-public class PollController {
+public class PollController extends Mapper{
     private final PollService pollsService;
     private final UserService userService;
     private final AnswerService answerService;
-    private final Mapper mapper;
 
     @Autowired
-    public PollController(PollService pollsService, UserService userService, AnswerService answerService, Mapper mapper) {
+    public PollController(PollService pollsService, UserService userService, AnswerService answerService) {
         this.pollsService = pollsService;
         this.userService = userService;
         this.answerService = answerService;
-        this.mapper = mapper;
     }
 
-    @PostMapping(value = "/create", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     @ApiResponses(value = {
             @ApiResponse(code = SC_BAD_REQUEST, message = "Unable to create a poll with blank title"),
             @ApiResponse(code = SC_CONFLICT, message = "Title already exists")
     })
-    public ResponseEntity<Poll> createPoll(@RequestBody Poll newPoll) {
-        PollEntity pollEntity = mapper.map(newPoll);
-
+    public ResponseEntity<Poll> createPoll(@AuthenticationPrincipal UserEntity authUser, @RequestBody Poll newPoll) {
+        PollEntity pollEntity = map(newPoll);
+        Optional<UserEntity> creatorOptional = userService.findByUserName(authUser.getUserName());
+        if (creatorOptional.isEmpty()){
+            throw new EntityNotFoundException("User not found");
+        }
+        pollEntity.setCreatedBy(creatorOptional.get());
         PollEntity createdPollEntity = pollsService.create(pollEntity);
-
-        return ok(mapper.map(createdPollEntity));
+        return ok(map(createdPollEntity));
     }
 
     @PostMapping(value = "/answer/{answerId}")
@@ -59,14 +60,12 @@ public class PollController {
             @PathVariable Long answerId) {
         PossibleAnswerEntity possibleAnswerEntity = answerService.findPossibleAnswerById(answerId);
         Optional<UserEntity> userEntityOptional = userService.findByUserName(authUser.getUserName());
-
         if (userEntityOptional.isPresent()) {
-
             AnswerEntity givenAnswer = AnswerEntity.builder()
                     .chosenAnswer(possibleAnswerEntity)
                     .user(userEntityOptional.get())
                     .build();
-            return ok(mapper.map(pollsService.giveAnswer(givenAnswer)));
+            return ok(map(pollsService.giveAnswer(givenAnswer)));
         }
         throw new EntityNotFoundException("User not found");
     }
@@ -74,7 +73,7 @@ public class PollController {
     @GetMapping(value ="/all")
     public ResponseEntity<List<Poll>> findAll() {
         List<PollEntity> pollEntities = pollsService.findAll();
-        return ok(mapper.map(pollEntities));
+        return ok(map(pollEntities));
     }
 
     @GetMapping(value = "/open")
@@ -92,8 +91,16 @@ public class PollController {
             }
                 pollEntities.add(pollOptional.get());
         }
-        return ok(mapper.mapOpenPolls(pollEntities));
+        return ok(mapOpenPolls(pollEntities));
     }
+
+/*    private UserEntity map(User user) {
+        Optional<UserEntity> userEntityOptional = userService.findByUserName(user.getUserName());
+        if (userEntityOptional.isPresent()) {
+            return userEntityOptional.get();
+        }
+        throw new EntityNotFoundException("User not found");
+    }*/
 /*    private Set<User> mapParticipants(Set<UserEntity> participantEntities) {
         Set<User> participants = new HashSet<>();
         for (UserEntity userEntity : participantEntities) {

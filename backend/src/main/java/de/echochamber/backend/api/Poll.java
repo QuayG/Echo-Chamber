@@ -26,5 +26,5 @@ public class Poll {
     private Set<User> participants;
 
     @ApiModelProperty(required = true, notes = "The user who created the poll.")
-    private User user;
+    private User creator;
 }

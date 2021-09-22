@@ -124,7 +124,7 @@ class PollControllerTest {
 
         Poll poll = Poll.builder()
                 .title("Do you like polls?")
-                .user(user)
+                .creator(user)
                 .possibleAnswers(possibleAnswers)
                 .givenAnswers(answers).build();
 
@@ -136,8 +136,8 @@ class PollControllerTest {
         Date exp = Date.from(now.plus(Duration.ofMinutes(jwtConfig.getExpiresAfterMinutes())));
 
         String token = Jwts.builder()
-                .setSubject("Peter")
                 .setClaims(claims)
+                .setSubject("TestUser")
                 .setIssuedAt(iat)
                 .setExpiration(exp)
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret()).compact();
@@ -147,13 +147,13 @@ class PollControllerTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // When
-        ResponseEntity<Poll> response = testRestTemplate.exchange(getUrl() + "create", HttpMethod.POST, new HttpEntity<>(poll, headers), Poll.class);
+        ResponseEntity<Poll> response = testRestTemplate.exchange(getUrl(), HttpMethod.POST, new HttpEntity<>(poll, headers), Poll.class);
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response.getBody().getTitle(), is("Do you like polls?"));
         assertThat(response.getBody().getPossibleAnswers().size(), is(2));
-        assertThat(response.getBody().getUser().getUserName(), is("TestUser"));
+        assertThat(response.getBody().getCreator().getUserName(), is("TestUser"));
         assertTrue(response.getBody().getGivenAnswers().isEmpty());
     }
 
@@ -174,7 +174,7 @@ class PollControllerTest {
                 .userName("TestUser").build();
 
         Poll poll = Poll.builder()
-                .user(user)
+                .creator(user)
                 .possibleAnswers(possibleAnswers)
                 .title(title)
                 .build();
@@ -187,8 +187,8 @@ class PollControllerTest {
         Date exp = Date.from(now.plus(Duration.ofMinutes(jwtConfig.getExpiresAfterMinutes())));
 
         String token = Jwts.builder()
-                .setSubject("TestUser")
                 .setClaims(claims)
+                .setSubject("TestUser")
                 .setIssuedAt(iat)
                 .setExpiration(exp)
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret()).compact();
@@ -198,7 +198,7 @@ class PollControllerTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // When
-        ResponseEntity<Poll> response = testRestTemplate.exchange(getUrl() + "create", HttpMethod.POST, new HttpEntity<>(poll, headers), Poll.class);
+        ResponseEntity<Poll> response = testRestTemplate.exchange(getUrl(), HttpMethod.POST, new HttpEntity<>(poll, headers), Poll.class);
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.CONFLICT));
@@ -223,7 +223,7 @@ class PollControllerTest {
                 .userName("TestUser").build();
 
         Poll poll = Poll.builder()
-                .user(user)
+                .creator(user)
                 .title(title)
                 .possibleAnswers(possibleAnswers).build();
 
@@ -235,8 +235,8 @@ class PollControllerTest {
         Date exp = Date.from(now.plus(Duration.ofMinutes(jwtConfig.getExpiresAfterMinutes())));
 
         String token = Jwts.builder()
-                .setSubject("TestUser")
                 .setClaims(claims)
+                .setSubject("TestUser")
                 .setIssuedAt(iat)
                 .setExpiration(exp)
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret()).compact();
@@ -246,7 +246,7 @@ class PollControllerTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // When
-        ResponseEntity<Poll> response = testRestTemplate.exchange(getUrl() + "create", HttpMethod.POST, new HttpEntity<>(poll, headers), Poll.class);
+        ResponseEntity<Poll> response = testRestTemplate.exchange(getUrl(), HttpMethod.POST, new HttpEntity<>(poll, headers), Poll.class);
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
@@ -267,7 +267,7 @@ class PollControllerTest {
                 .userName("TestUser").build();
 
         Poll poll = Poll.builder()
-                .user(user)
+                .creator(user)
                 .title(title)
                 .possibleAnswers(possibleAnswers).build();
 
@@ -279,8 +279,8 @@ class PollControllerTest {
         Date exp = Date.from(now.plus(Duration.ofMinutes(jwtConfig.getExpiresAfterMinutes())));
 
         String token = Jwts.builder()
-                .setSubject("TestUser")
                 .setClaims(claims)
+                .setSubject("TestUser")
                 .setIssuedAt(iat)
                 .setExpiration(exp)
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret()).compact();
@@ -290,7 +290,7 @@ class PollControllerTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // When
-        ResponseEntity<Poll> response = testRestTemplate.exchange(getUrl() + "create", HttpMethod.POST, new HttpEntity<>(poll, headers), Poll.class);
+        ResponseEntity<Poll> response = testRestTemplate.exchange(getUrl(), HttpMethod.POST, new HttpEntity<>(poll, headers), Poll.class);
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));

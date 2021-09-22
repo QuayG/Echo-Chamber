@@ -23,7 +23,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("user")
-public class UserController {
+public class UserController extends Mapper{
     public static final String USER_CONTROLLER_TAG = "User";
 
     private final UserService userService;
@@ -46,21 +46,5 @@ public class UserController {
         User createdUser = map(createdUserEntity);
 
         return ok(createdUser);
-    }
-
-    private User map(UserEntity userEntity){
-        return User.builder()
-                .userName(userEntity.getUserName())
-                .firstName(userEntity.getFirstName())
-                .lastName(userEntity.getLastName())
-                .role(userEntity.getRole()).build();
-    }
-
-    private UserEntity map(User user){
-        return UserEntity.builder()
-                .userName(user.getUserName())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .password(user.getPassword()).build();
     }
 }

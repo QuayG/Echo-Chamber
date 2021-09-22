@@ -25,10 +25,9 @@ export default function Login() {
         event.preventDefault()
         setError()
         setLoading(true)
-        login(credentials).catch(error => {
-            setError(error)
-            setLoading(false)
-        })
+        login(credentials)
+            .catch(error => setError(error.response.data.message))
+            .finally(setLoading(false))
     }
 
     const handleCredentialsChanged = event =>
@@ -61,7 +60,7 @@ export default function Login() {
                     <NavLink to="/register">Register</NavLink>
                 </Main>
             )}
-            {error && <Error>{error.message}</Error>}
+            {error && <Error>{error}</Error>}
         </Page>
     )
 }

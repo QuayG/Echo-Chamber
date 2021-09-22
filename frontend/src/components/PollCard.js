@@ -7,7 +7,7 @@ export default function PollCard({poll, reloadPolls}) {
             <h3>{poll.title}</h3>
             <AnswerList possibleAnswers={poll.possibleAnswers} reloadPolls={reloadPolls}/>
             <p>No. of participants: {poll.givenAnswers.length}</p>
-            <p>Created by: {poll.user.userName}</p>
+            <p>Created by: {poll.creator.userName}</p>
         </Wrapper>
     )
 }

@@ -21,7 +21,7 @@ const initialState = [
                 possibleAnswer: "",
             }
         ],
-        user: {},
+        creator: {},
         participants: [],
     }
 ]
@@ -32,20 +32,21 @@ export default function Polls() {
     const [error, setError] = useState()
     const [polls, setPolls] = useState(initialState)
 
-    useEffect(() => {
-        if (user) {
-            reloadPolls()
-        }
-    }, [user, token])
-
     const reloadPolls = ()=>{
         setLoading(true)
         setError()
         findOpenPolls(token)
             .then(polls => setPolls(polls))
-            .catch(error => setError(error))
+            .catch(error => setError(error.response.data.message))
             .finally(() => setLoading(false))
     }
+
+    useEffect(() => {
+        if (user) {
+            reloadPolls()
+        }
+    }, [user, token, reloadPolls])
+
 
     if (!user) {
         return <Redirect to="/"/>
@@ -56,7 +57,7 @@ export default function Polls() {
             <Header title="Polls"/>
             {loading && <Loading/>}
             {!loading && <PollsList reloadPolls={reloadPolls} polls={polls}/>}
-            {error && <Error>{error.response.data.message}</Error>}
+            {error && <Error>{error}</Error>}
             <LinkStyled to="/create">Create new poll</LinkStyled>
             <Navbar/>
         </Page>
