@@ -22,6 +22,9 @@ public class Poll {
     @ApiModelProperty(required = true, notes = "Set of given answers")
     private Set<Answer> givenAnswers;
 
+    @ApiModelProperty(required = true, notes = "Set of users that participated in the poll.")
+    private Set<User> participants;
+
     @ApiModelProperty(required = true, notes = "The user who created the poll.")
     private User user;
 }
