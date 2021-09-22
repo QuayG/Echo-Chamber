@@ -4,10 +4,10 @@ export default styled.p`
   color: var(--error);
 
   :before {
-    content: '🙀 ';
+    content: '⚡️ ';
   }
 
   :after {
-    content: ' 🙀';
+    content: ' ⚡️';
   }
 `
