@@ -2,6 +2,7 @@ package de.echochamber.backend.service;
 
 import de.echochamber.backend.model.AnswerEntity;
 import de.echochamber.backend.model.PollEntity;
+import de.echochamber.backend.model.UserEntity;
 import de.echochamber.backend.repo.PollRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.springframework.util.Assert.hasText;
 
@@ -37,13 +39,16 @@ public class PollService {
         if (pollEntityOptional.isPresent()){
             throw new EntityExistsException("A poll with this title already exists.");
         }
-
         return pollRepository.save(pollEntity);
     }
 
     public List<PollEntity> findAll(){
 
         return pollRepository.findAll();
+    }
+
+    public Set<Optional<PollEntity>> findAllByParticipantsNotContaining(UserEntity userEntity){
+        return pollRepository.findAllByParticipantsNotContaining(userEntity);
     }
 
     public AnswerEntity giveAnswer(AnswerEntity givenAnswerEntity) {
