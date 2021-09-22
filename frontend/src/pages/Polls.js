@@ -5,10 +5,11 @@ import {useAuth} from "../auth/AuthProvider";
 import {Link, Redirect} from "react-router-dom";
 import Navbar from "../components/Navbar";
 import {useEffect, useState} from "react";
-import {findAll} from "../service/api-service";
+import {findOpenPolls} from "../service/api-service";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import PollsList from "../components/PollsList";
+
 
 const initialState = [
     {
@@ -21,26 +22,30 @@ const initialState = [
             }
         ],
         user: {},
+        participants: [],
     }
 ]
-
 export default function Polls() {
 
     const {user, token} = useAuth()
-    const [polls, setPolls] = useState(initialState)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
+    const [polls, setPolls] = useState(initialState)
 
     useEffect(() => {
-        if (token) {
-            setError()
-            setLoading(true)
-            findAll(token).then(setPolls).catch(error => {
-                setError(error)
-            })
-            setLoading(false)
+        if (user) {
+            reloadPolls()
         }
-    }, [token, user])
+    }, [user, token])
+
+    const reloadPolls = ()=>{
+        setLoading(true)
+        setError()
+        findOpenPolls(token)
+            .then(polls => setPolls(polls))
+            .catch(error => setError(error))
+            .finally(() => setLoading(false))
+    }
 
     if (!user) {
         return <Redirect to="/"/>
@@ -50,9 +55,9 @@ export default function Polls() {
         <Page>
             <Header title="Polls"/>
             {loading && <Loading/>}
-            {!loading && <PollsList polls={polls}/>}
-            {error && <Error>{error}</Error>}
-            <LinkStyled to="/create">Polls</LinkStyled>
+            {!loading && <PollsList reloadPolls={reloadPolls} polls={polls}/>}
+            {error && <Error>{error.response.data.message}</Error>}
+            <LinkStyled to="/create">Create new poll</LinkStyled>
             <Navbar/>
         </Page>
     )
@@ -62,10 +67,10 @@ export default function Polls() {
 const LinkStyled = styled(Link)`
   text-decoration: none;
   padding: var(--size-s);
+  margin: var(--size-l);
   background: var(--accent);
   border: 1px solid var(--accent);
   color: var(--neutral-light);
   font-size: 1em;
   border-radius: var(--size-s);
-  margin: 1px;
 `

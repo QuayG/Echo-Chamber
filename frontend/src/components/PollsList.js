@@ -1,12 +1,13 @@
-import Poll from "./Poll";
+import PollCard from "./PollCard";
 import styled from "styled-components/macro";
 
-export default function PollsList({polls}) {
+export default function PollsList({polls, reloadPolls}) {
+
     return (
         <Wrapper>
             {polls.map(poll => (
             <li key={poll.title}>
-                <Poll poll={poll}/>
+                <PollCard reloadPolls={reloadPolls} poll={poll}/>
             </li>
             ))}
         </Wrapper>
