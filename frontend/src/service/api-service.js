@@ -36,5 +36,5 @@ export const findOpenPolls = (token) =>
 export const giveAnswer = (selectedAnswerId, token) => {
     return axios
         .post(`/api/echo-chamber/polls/answer/${selectedAnswerId}`, null, getAuthHeaders(token))
-        .then(response => response.data)
+        .then(()=>findOpenPolls(token))
 }
