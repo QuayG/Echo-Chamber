@@ -5,7 +5,7 @@ import Button from "./Button";
 import {useAuth} from "../auth/AuthProvider";
 import Error from "./Error";
 
-export default function AnswerList({possibleAnswers, reloadPolls}) {
+export default function AnswerList({possibleAnswers, setPolls}) {
 
     const {token} = useAuth();
     const [error, setError] = useState()
@@ -27,7 +27,7 @@ export default function AnswerList({possibleAnswers, reloadPolls}) {
         setError()
         giveAnswer(selectedAnswerId, token)
             .catch(error => setError(error))
-            .finally(() => reloadPolls())
+            .finally(response => setPolls(response))
     }
 
     return (

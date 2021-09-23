@@ -32,7 +32,7 @@ export default function CreatePoll() {
         setError()
         setLoading(true)
         createPoll(poll, token)
-            .catch(error => setError(error))
+            .catch(error => setError(error.response.data.message))
             .finally(()=>setLoading(false))
         setPollTitle('')
         setAnswerToAdd('')
@@ -45,14 +45,12 @@ export default function CreatePoll() {
 
     const handleAnswerToAddInputChange = event => {
         setAnswerToAdd(event.target.value)
-        console.log("aaa")
     }
 
     const addPossibleAnswer = event => {
         event.preventDefault()
         setPossibleAnswers([...possibleAnswers, {possibleAnswer: answerToAdd}])
         setAnswerToAdd('')
-        console.log("bbb")
     }
 
     if (!user) {
@@ -84,7 +82,7 @@ export default function CreatePoll() {
                 <Button>Save</Button>
             </Wrapper>
             }
-            {error && <Error>{error.message}</Error>}
+            {error && <Error>{error}</Error>}
             <Navbar/>
         </Page>
     )

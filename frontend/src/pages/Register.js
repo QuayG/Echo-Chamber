@@ -8,7 +8,7 @@ import {Redirect} from "react-router-dom";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
 
-const initialState ={
+const initialState = {
     userName: '',
     firstName: '',
     lastName: '',
@@ -16,7 +16,7 @@ const initialState ={
     repeatedPassword: '',
 }
 
-export default function Register(){
+export default function Register() {
 
     const [newUserInput, setNewUserInput] = useState(initialState)
     const [createdUser, setCreatedUser] = useState(false)
@@ -40,59 +40,59 @@ export default function Register(){
             lastName: newUserInput.lastName,
             password: newUserInput.password
         }
-        createUser(user).then(()=>setCreatedUser(user)).catch(error=>{
-            setError(error)
-            setLoading(false)
-        })
+        createUser(user)
+            .then(() => setCreatedUser(user))
+            .catch(error => setError(error.response.data.message))
+            .finally(() => setLoading(false))
     }
 
-    if (createdUser){
+    if (createdUser) {
         return <Redirect to="/"/>
     }
 
-    return(
+    return (
         <Page>
             {loading && <Loading/>}
             {!loading &&
             <Main as="form" onSubmit={handleSubmit}>
                 <TextField
-                title="Username"
-                name="userName"
-                value={newUserInput.userName}
-                onChange={handleNewUserInputChange}
+                    title="Username"
+                    name="userName"
+                    value={newUserInput.userName}
+                    onChange={handleNewUserInputChange}
                 />
                 <TextField
-                title="First Name"
-                name="firstName"
-                type="firstName"
-                value={newUserInput.firstName}
-                onChange={handleNewUserInputChange}
+                    title="First Name"
+                    name="firstName"
+                    type="firstName"
+                    value={newUserInput.firstName}
+                    onChange={handleNewUserInputChange}
                 />
                 <TextField
-                title="Last Name"
-                name="lastName"
-                type="lastName"
-                value={newUserInput.lastName}
-                onChange={handleNewUserInputChange}
+                    title="Last Name"
+                    name="lastName"
+                    type="lastName"
+                    value={newUserInput.lastName}
+                    onChange={handleNewUserInputChange}
                 />
                 <TextField
-                title="Password"
-                name="password"
-                type="password"
-                value={newUserInput.password}
-                onChange={handleNewUserInputChange}
+                    title="Password"
+                    name="password"
+                    type="password"
+                    value={newUserInput.password}
+                    onChange={handleNewUserInputChange}
                 />
                 <TextField
-                title="Repeat password"
-                name="repeatedPassword"
-                type="password"
-                value={newUserInput.repeatedPassword}
-                onChange={handleNewUserInputChange}
+                    title="Repeat password"
+                    name="repeatedPassword"
+                    type="password"
+                    value={newUserInput.repeatedPassword}
+                    onChange={handleNewUserInputChange}
                 />
                 <Button disabled={!passwordsMatch}>Register</Button>
             </Main>
             }
-            {error && <Error>{error.message}</Error>}
+            {error && <Error>{error}</Error>}
         </Page>
     )
 }
