@@ -55,9 +55,6 @@ export default function BarChart({poll}) {
                 width={300}
                 options={{
                     maintainAspectRatio: false,
-                    legend: {
-                        display: false,
-                    },
                     scales: {
                         yAxes: [
                             {
