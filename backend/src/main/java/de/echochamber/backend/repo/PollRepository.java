@@ -12,5 +12,6 @@ public interface PollRepository extends JpaRepository<PollEntity, Long> {
 
     Optional<PollEntity> findByPossibleAnswersContains(PossibleAnswerEntity possibleAnswerEntity);
     Set<Optional<PollEntity>> findAllByParticipantsNotContaining(UserEntity userEntity);
+    Set<Optional<PollEntity>> findAllByParticipantsContaining(UserEntity userEntity);
     Optional<PollEntity> findByTitle(String title);
 }
