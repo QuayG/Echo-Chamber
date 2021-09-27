@@ -28,14 +28,19 @@ export const findPollById = (pollId, token) =>
         .get(`/api/echo-chamber/polls/${pollId}`, getAuthHeaders(token))
         .then(response =>response.data)
 
-export const findAll = (token) =>
+export const findAll = token =>
     axios
         .get('/api/echo-chamber/polls', getAuthHeaders(token))
         .then(response => response.data)
 
-export const findOpenPolls = (token) =>
+export const findOpenPolls = token =>
     axios
         .get('/api/echo-chamber/polls/open', getAuthHeaders(token))
+        .then(response => response.data)
+
+export const findDonePolls = token =>
+    axios
+        .get('/api/echo-chamber/polls/done', getAuthHeaders(token))
         .then(response => response.data)
 
 export const giveAnswer = (selectedAnswerId, token) => {
