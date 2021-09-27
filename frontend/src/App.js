@@ -7,6 +7,7 @@ import Polls from "./pages/Polls";
 import CreatePoll from "./pages/CreatePoll";
 import Result from "./pages/Result";
 import Vote from "./pages/Vote";
+import Results from "./pages/Results";
 
 
 export default function App() {
@@ -19,7 +20,8 @@ export default function App() {
                     <Route path="/main_menu" component={Menu} />
                     <Route exact path="/polls" component={Polls} />
                     <Route path="/create" component={CreatePoll} />
-                    <Route path="/result/:pollId" component={Result} />
+                    <Route exact path="/results" component={Results} />
+                    <Route path="/results/:pollId" component={Result} />
                     <Route path="/vote/:pollId" component={Vote} />
                 </Switch>
             </Router>

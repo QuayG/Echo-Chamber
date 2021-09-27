@@ -25,9 +25,8 @@ export default function AnswerList({possibleAnswers, vote, pollId}) {
     }
 
     if (voted){
-        return <Redirect to={`/result/${pollId}`}/>
+        return <Redirect to={`/results/${pollId}`}/>
     }
-
 
     return (
         <Wrapper>
