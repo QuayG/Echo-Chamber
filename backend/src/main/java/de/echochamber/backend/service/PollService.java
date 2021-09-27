@@ -1,5 +1,6 @@
 package de.echochamber.backend.service;
 
+import de.echochamber.backend.api.Poll;
 import de.echochamber.backend.model.AnswerEntity;
 import de.echochamber.backend.model.PollEntity;
 import de.echochamber.backend.model.UserEntity;
@@ -62,5 +63,9 @@ public class PollService {
             return givenAnswerEntity;
         }
         throw new EntityNotFoundException("No poll found for selected answer.");
+    }
+
+    public Optional<PollEntity> findById(Long pollId) {
+        return pollRepository.findById(pollId);
     }
 }
