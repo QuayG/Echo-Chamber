@@ -5,27 +5,22 @@ import Menu from "./pages/Menu";
 import Register from "./pages/Register";
 import Polls from "./pages/Polls";
 import CreatePoll from "./pages/CreatePoll";
+import Result from "./pages/Result";
+import Vote from "./pages/Vote";
+
 
 export default function App() {
     return (
         <AuthProvider>
             <Router>
                 <Switch>
-                    <Route exact path="/">
-                        <Login/>
-                    </Route>
-                    <Route path="/register">
-                        <Register/>
-                    </Route>
-                    <Route path="/main_menu">
-                        <Menu/>
-                    </Route>
-                    <Route exact path="/polls">
-                        <Polls/>
-                    </Route>
-                    <Route path="/create">
-                        <CreatePoll/>
-                    </Route>
+                    <Route exact path="/" component={Login} />
+                    <Route path="/register" component={Register} />
+                    <Route path="/main_menu" component={Menu} />
+                    <Route exact path="/polls" component={Polls} />
+                    <Route path="/create" component={CreatePoll} />
+                    <Route path="/result/:pollId" component={Result} />
+                    <Route path="/vote/:pollId" component={Vote} />
                 </Switch>
             </Router>
         </AuthProvider>
