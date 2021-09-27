@@ -78,6 +78,7 @@ abstract class Mapper {
                 .creator(creator)
                 .possibleAnswers(possibleAnswers)
                 .givenAnswers(answers)
+                .id(pollEntity.getId())
                 .participants(participants).build();
     }
 
