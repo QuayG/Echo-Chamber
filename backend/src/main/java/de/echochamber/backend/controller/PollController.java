@@ -84,14 +84,29 @@ public class PollController extends Mapper{
         }
 
         Set<Optional<PollEntity>> openPollsOptional = pollsService.findAllByParticipantsNotContaining(userEntity.get());
+        return getSetResponseEntity(openPollsOptional);
+    }
+
+    @GetMapping(value = "/done")
+    public ResponseEntity<Set<Poll>> findDonePolls(@AuthenticationPrincipal UserEntity authUser){
+        Optional<UserEntity> userEntity = userService.findByUserName(authUser.getUserName());
+        if (userEntity.isEmpty()){
+            throw new EntityNotFoundException("User not found");
+        }
+
+        Set<Optional<PollEntity>> donePollsOptional = pollsService.findAllByParticipantsContaining(userEntity.get());
+        return getSetResponseEntity(donePollsOptional);
+    }
+
+    private ResponseEntity<Set<Poll>> getSetResponseEntity(Set<Optional<PollEntity>> donePollsOptional) {
         Set<PollEntity> pollEntities = new HashSet<>();
-        for (Optional<PollEntity> pollOptional: openPollsOptional) {
+        for (Optional<PollEntity> pollOptional: donePollsOptional) {
             if (pollOptional.isEmpty()){
                 throw new EntityNotFoundException("Poll not found");
             }
-                pollEntities.add(pollOptional.get());
+            pollEntities.add(pollOptional.get());
         }
-        return ok(mapOpenPolls(pollEntities));
+        return ok(mapPolls(pollEntities));
     }
 
     @GetMapping(value="{pollId}")
