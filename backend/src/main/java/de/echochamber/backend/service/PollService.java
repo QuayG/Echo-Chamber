@@ -1,6 +1,5 @@
 package de.echochamber.backend.service;
 
-import de.echochamber.backend.api.Poll;
 import de.echochamber.backend.model.AnswerEntity;
 import de.echochamber.backend.model.PollEntity;
 import de.echochamber.backend.model.UserEntity;
@@ -67,5 +66,9 @@ public class PollService {
 
     public Optional<PollEntity> findById(Long pollId) {
         return pollRepository.findById(pollId);
+    }
+
+    public Set<Optional<PollEntity>> findAllByParticipantsContaining(UserEntity userEntity) {
+        return pollRepository.findAllByParticipantsContaining(userEntity);
     }
 }
