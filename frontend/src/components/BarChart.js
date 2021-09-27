@@ -23,6 +23,14 @@ export default function BarChart({poll}) {
     console.log(data())
     const possibleAnswers = () => poll.possibleAnswers.map(possibleAnswer => possibleAnswer.possibleAnswer)
 
+    const numSteps = ()=>{
+
+        if(Math.max.apply(data)<5){
+            return Math.max.apply(data)
+        }
+        return Math.max.apply(data)/5
+    }
+
     return (
         <Wrapper>
             <h1>{poll.title}</h1>
@@ -51,15 +59,13 @@ export default function BarChart({poll}) {
                         borderWidth: 1,
                     }]
                 }}
-                height={200}
-                width={300}
                 options={{
-                    maintainAspectRatio: false,
                     scales: {
                         yAxes: [
                             {
                                 ticks: {
-                                    precision: 0,
+                                    stepSize: 1,
+                                    numSteps: numSteps(),
                                     beginAtZero: true,
                                 },
                             }
