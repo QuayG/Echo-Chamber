@@ -6,7 +6,7 @@ export default function Navbar(){
     return(
         <Wrapper>
             <NavLink to="/polls">Polls</NavLink>
-            <NavLink to="/echo">Echo-Chambers</NavLink>
+            <NavLink to="/results">Results</NavLink>
         </Wrapper>
     )
 }

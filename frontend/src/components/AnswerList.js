@@ -1,14 +1,12 @@
 import styled from "styled-components/macro";
 import {useState} from "react";
-import {giveAnswer} from "../service/api-service";
 import Button from "./Button";
-import {useAuth} from "../auth/AuthProvider";
-import Error from "./Error";
+import {Redirect} from "react-router-dom";
 
-export default function AnswerList({possibleAnswers, setPolls}) {
+export default function AnswerList({possibleAnswers, vote, pollId}) {
 
-    const {token} = useAuth();
-    const [error, setError] = useState()
+    const [voted, setVoted] = useState(false)
+
     const [selectedAnswerId, setSelectedAnswerId] = useState()
 
     const select = id => {
@@ -22,23 +20,22 @@ export default function AnswerList({possibleAnswers, setPolls}) {
         return ""
     }
 
-    const vote = event => {
-        event.preventDefault()
-        setError()
-        giveAnswer(selectedAnswerId, token)
-            .catch(error => setError(error))
-            .finally(response => setPolls(response))
+    const handleVoteClick = () =>{
+        vote(selectedAnswerId).then(()=>setVoted(true))
+    }
+
+    if (voted){
+        return <Redirect to={`/results/${pollId}`}/>
     }
 
     return (
         <Wrapper>
-            {possibleAnswers.map((answer) => (
+            {possibleAnswers.map(answer => (
                 <li className={activeClassname(answer)}
                     onClick={() => select(answer.id)}
-                    key={answer.possibleAnswer}>{answer.possibleAnswer}</li>
+                    key={answer.id}>{answer.possibleAnswer}</li>
             ))}
-            <Button onClick={vote}>Vote</Button>
-            {error && <Error>{error.message}</Error>}
+            <Button onClick={handleVoteClick}>Vote</Button>
         </Wrapper>)
 }
 

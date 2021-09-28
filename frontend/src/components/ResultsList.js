@@ -1,13 +1,13 @@
 import styled from "styled-components/macro";
-import ReducedPollCard from "./ReducedPollCard";
+import ReducedResultCard from "./ReducedResultCard";
 
-export default function PollsList({polls, setPolls}) {
+export default function ResultsList({polls}) {
 
     return (
         <Wrapper>
             {polls.map(poll => (
                 <li key={poll.title}>
-                    <ReducedPollCard setPolls={setPolls} poll={poll}/>
+                    <ReducedResultCard poll={poll}/>
                 </li>
             ))}
         </Wrapper>

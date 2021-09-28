@@ -1,11 +1,12 @@
 import AnswerList from "./AnswerList";
 import styled from "styled-components/macro";
 
-export default function PollCard({poll, setPolls}) {
+export default function PollCard({poll, vote}) {
+
     return (
         <Wrapper>
             <h3>{poll.title}</h3>
-            <AnswerList possibleAnswers={poll.possibleAnswers} setPolls={setPolls}/>
+            <AnswerList possibleAnswers={poll.possibleAnswers} vote={vote} pollId={poll.id}/>
             <p>No. of participants: {poll.givenAnswers.length}</p>
             <p>Created by: {poll.creator.userName}</p>
         </Wrapper>

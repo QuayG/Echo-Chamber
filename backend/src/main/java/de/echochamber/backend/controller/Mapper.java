@@ -78,6 +78,7 @@ abstract class Mapper {
                 .creator(creator)
                 .possibleAnswers(possibleAnswers)
                 .givenAnswers(answers)
+                .id(pollEntity.getId())
                 .participants(participants).build();
     }
 
@@ -104,7 +105,7 @@ abstract class Mapper {
         return polls;
     }
 
-    public Set<Poll> mapOpenPolls(Set<PollEntity> pollEntities) {
+    public Set<Poll> mapPolls(Set<PollEntity> pollEntities) {
         Set<Poll> polls = new HashSet<>();
         for (PollEntity pollEntity : pollEntities) {
             polls.add(map(pollEntity));

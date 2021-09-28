@@ -27,4 +27,7 @@ public class Poll {
 
     @ApiModelProperty(required = true, notes = "The user who created the poll.")
     private User creator;
+
+    @ApiModelProperty(required = true, notes = " Poll id")
+    private Long id;
 }

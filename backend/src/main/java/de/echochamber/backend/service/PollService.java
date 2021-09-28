@@ -63,4 +63,12 @@ public class PollService {
         }
         throw new EntityNotFoundException("No poll found for selected answer.");
     }
+
+    public Optional<PollEntity> findById(Long pollId) {
+        return pollRepository.findById(pollId);
+    }
+
+    public Set<Optional<PollEntity>> findAllByParticipantsContaining(UserEntity userEntity) {
+        return pollRepository.findAllByParticipantsContaining(userEntity);
+    }
 }
