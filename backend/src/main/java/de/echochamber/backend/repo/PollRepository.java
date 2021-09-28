@@ -5,6 +5,7 @@ import de.echochamber.backend.model.PossibleAnswerEntity;
 import de.echochamber.backend.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -14,4 +15,5 @@ public interface PollRepository extends JpaRepository<PollEntity, Long> {
     Set<Optional<PollEntity>> findAllByParticipantsNotContaining(UserEntity userEntity);
     Set<Optional<PollEntity>> findAllByParticipantsContaining(UserEntity userEntity);
     Optional<PollEntity> findByTitle(String title);
+
 }

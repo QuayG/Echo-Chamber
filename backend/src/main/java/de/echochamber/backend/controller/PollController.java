@@ -12,6 +12,7 @@ import de.echochamber.backend.service.UserService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,15 @@ public class PollController extends Mapper{
         pollEntity.setCreatedBy(creatorOptional.get());
         PollEntity createdPollEntity = pollsService.create(pollEntity);
         return ok(map(createdPollEntity));
+    }
+
+    @DeleteMapping(value = "/{pollId}")
+    public ResponseEntity<Poll> deletePoll(@AuthenticationPrincipal UserEntity authUser, @PathVariable Long pollId){
+        if (!authUser.getRole().equals("admin")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        PollEntity deletedPoll = pollsService.deletePollById(pollId);
+        return ok(map(deletedPoll));
     }
 
     @PostMapping(value = "/answer/{answerId}")

@@ -71,4 +71,14 @@ public class PollService {
     public Set<Optional<PollEntity>> findAllByParticipantsContaining(UserEntity userEntity) {
         return pollRepository.findAllByParticipantsContaining(userEntity);
     }
+
+    public PollEntity deletePollById(Long Id){
+        Optional<PollEntity> pollToDelete = findById(Id);
+        if (pollToDelete.isEmpty()){
+            throw new EntityNotFoundException("Poll not found");
+        }
+        PollEntity deletedPoll = pollToDelete.get();
+        pollRepository.delete(deletedPoll);
+        return deletedPoll;
+    };
 }
