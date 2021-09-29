@@ -10,6 +10,8 @@ import {deletePollById, findAllPolls} from "../service/api-service";
 import "../components/Button";
 import Button from "../components/Button";
 import styled from "styled-components/macro";
+import ReducedPollCard from "../components/ReducedPollCard";
+import ListWrapper from "../components/ListWrapper";
 
 export default function DeletePolls() {
 
@@ -33,7 +35,7 @@ export default function DeletePolls() {
         setDeleted(false)
         deletePollById(selectedPollId, token)
             .then(polls => console.log(polls))
-            .finally(()=>setDeleted(true))
+            .finally(() => setDeleted(true))
     }
 
     const select = id => {
@@ -60,47 +62,25 @@ export default function DeletePolls() {
         <Page>
             <Header title="Polls"/>
             {loading && <Loading/>}
-            {!loading && <Wrapper>
+            {!loading && <ListWrapper>
                 {polls.map(poll => (
                     <li className={activeClassname(poll)}
                         onClick={() => select(poll.id)}
-                        key={poll.id}>{poll.title}</li>
+                        key={poll.id}>
+                        <ReducedPollCard poll={poll}/>
+                    </li>
                 ))}
+            </ListWrapper>}
+            <StyledSection>
                 <Button onClick={deletePoll}>Delete</Button>
-            </Wrapper>}
+            </StyledSection>
             {error && <Error>{error}</Error>}
             <Navbar/>
         </Page>
     )
 }
 
-const Wrapper = styled.ul`
-  width: 220px;
-  margin: 5px;
-  padding: 5px;
-  list-style: none;
-  justify-items: center;
+const StyledSection = styled.section`
+  display: flex;
   justify-content: center;
-
-  li {
-    border: 1px solid var(--accent);
-    border-radius: var(--size-s);
-    display: grid;
-    grid-template-rows: 80% 20%;
-    justify-items: center;
-    justify-content: center;
-    margin: 5px;
-    padding: 5px;
-  }
-
-  li.active {
-    background-color: var(--accent-light);
-  }
-
-  Button {
-    align-self: flex-end;
-    width: 50%;
-    margin: 10px;
-    text-align: center;
-  }
 `

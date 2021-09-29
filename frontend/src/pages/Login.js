@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {useAuth} from "../auth/AuthProvider";
 import Main from "../components/Main";
 import TextField from "../components/TextField";
@@ -8,7 +8,7 @@ import Header from "../components/Header";
 import Page from "../components/Page";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
-import StyledLink from "../components/StyledLink";
+import styled from "styled-components/macro";
 
 const initialState = {
     userName: '',
@@ -62,10 +62,22 @@ export default function Login() {
                         onChange={handleCredentialsChanged}
                     />
                     <Button>Login</Button>
-                    <StyledLink to="/register">Register</StyledLink>
+                    <RegisterLink to="/register">Register</RegisterLink>
                 </Main>
             )}
             {error && <Error>{error}</Error>}
         </Page>
     )
 }
+
+const RegisterLink = styled(Link)`
+  text-decoration: none;
+  padding: var(--size-m);
+  background: var(--neutral-dark);
+  border: 1px solid var(--neutral-light);
+  color: var(--neutral-light);
+  font-size: var(--size-l);
+  border-radius: var(--size-s);
+  margin: 10px;
+`
+
