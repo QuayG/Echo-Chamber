@@ -32,7 +32,7 @@ export default function CreatePoll() {
         setError()
         setLoading(true)
         createPoll(poll, token)
-            .catch(error => setError(error.response.data.message))
+            .catch(error => setError(error))
             .finally(()=>setLoading(false))
         setPollTitle('')
         setAnswerToAdd('')
@@ -82,7 +82,7 @@ export default function CreatePoll() {
                 <Button>Save</Button>
             </Wrapper>
             }
-            {error && <Error>{error}</Error>}
+            {error && <Error>{error.response.data.error}</Error>}
             <Navbar/>
         </Page>
     )

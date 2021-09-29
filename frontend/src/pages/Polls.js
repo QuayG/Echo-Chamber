@@ -37,7 +37,7 @@ export default function Polls() {
         setError()
         findOpenPolls(token)
             .then(polls => setPolls(polls))
-            .catch(error => setError(error.response.data.message))
+            .catch(error => setError(error.response.data.error))
             .finally(() => setLoading(false))
     }, [token])
 

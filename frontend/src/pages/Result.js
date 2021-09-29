@@ -20,7 +20,7 @@ export default function Result() {
         findPollById(pollId, token)
             .then(poll=>setPoll(poll))
             .then(()=> setVoted(true))
-            .catch(error=>setError(error.response.data.message))
+            .catch(error=>setError(error.response.data.error))
     }, [pollId, token])
 
     if (!user) {
