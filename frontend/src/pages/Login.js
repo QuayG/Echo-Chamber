@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {NavLink, Redirect} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {useAuth} from "../auth/AuthProvider";
 import Main from "../components/Main";
 import TextField from "../components/TextField";
@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import Page from "../components/Page";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
+import StyledLink from "../components/StyledLink";
 
 const initialState = {
     userName: '',
@@ -43,6 +44,10 @@ export default function Login() {
             {loading && <Loading/>}
             {!loading && (
                 <Main as="form" onSubmit={handleSubmit}>
+                    <div>
+                        <h2>This is the great voting app everybody is talking about!</h2>
+                        <h3>Please register if you dont have an account already.</h3>
+                    </div>
                     <TextField
                         title="Username"
                         name="userName"
@@ -57,7 +62,7 @@ export default function Login() {
                         onChange={handleCredentialsChanged}
                     />
                     <Button>Login</Button>
-                    <NavLink to="/register">Register</NavLink>
+                    <StyledLink to="/register">Register</StyledLink>
                 </Main>
             )}
             {error && <Error>{error}</Error>}

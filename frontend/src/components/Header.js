@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 import Button from "./Button";
 import {useAuth} from "../auth/AuthProvider";
-import Avatar from "./Avatar";
+import MyLogo from "./MyLogo";
 
 export default function Header({title}){
 
@@ -9,9 +9,8 @@ export default function Header({title}){
 
     return(
         <Wrapper>
-            {user && <Avatar src={user.avatarUrl} alt=""/>}
-            {!user && <div/>}
-            <h3>{title}</h3>
+            <MyLogo src="echo.jpg" alt='Logo'/>
+            <h2>{title}</h2>
             {user && <Button onClick={logout}>Logout</Button>}
             {!user && <div/>}
         </Wrapper>
@@ -26,6 +25,7 @@ const Wrapper = styled.header`
   align-items: center;
   grid-template-columns: 30% 40% 30%;
   background: var(--background-dark);
+  border-bottom: 2px solid var(--neutral-dark);
   
   Button{
     margin: var(--size-s);

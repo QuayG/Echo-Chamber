@@ -20,24 +20,33 @@ export default function AnswerList({possibleAnswers, vote, pollId}) {
         return ""
     }
 
-    const handleVoteClick = () =>{
-        vote(selectedAnswerId).then(()=>setVoted(true))
+    const handleVoteClick = () => {
+        vote(selectedAnswerId).then(() => setVoted(true))
     }
 
-    if (voted){
+    if (voted) {
         return <Redirect to={`/results/${pollId}`}/>
     }
 
     return (
+
         <Wrapper>
             {possibleAnswers.map(answer => (
                 <li className={activeClassname(answer)}
                     onClick={() => select(answer.id)}
                     key={answer.id}>{answer.possibleAnswer}</li>
             ))}
-            <Button onClick={handleVoteClick}>Vote</Button>
-        </Wrapper>)
+            <QuickNDirty>
+                <Button onClick={handleVoteClick}>Vote</Button>
+            </QuickNDirty>
+        </Wrapper>
+    )
 }
+
+const QuickNDirty = styled.section`
+  display: flex;
+  justify-content: center;
+`
 
 const Wrapper = styled.ul`
   width: 220px;
@@ -46,6 +55,7 @@ const Wrapper = styled.ul`
   list-style: none;
   justify-items: center;
   justify-content: center;
+  align-self: center;
 
   li {
     border: 1px solid var(--accent);
@@ -53,7 +63,6 @@ const Wrapper = styled.ul`
     display: grid;
     grid-template-rows: 80% 20%;
     justify-items: center;
-    justify-content: center;
     margin: 5px;
     padding: 5px;
   }
@@ -63,7 +72,6 @@ const Wrapper = styled.ul`
   }
 
   Button {
-    align-self: flex-end;
     width: 50%;
     margin: 10px;
     text-align: center;

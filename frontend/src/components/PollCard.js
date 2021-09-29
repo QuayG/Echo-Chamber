@@ -14,11 +14,9 @@ export default function PollCard({poll, vote}) {
 }
 
 const Wrapper = styled.div`
-  
-  height: 100%;
+  height: 80%;
   width: 260px;
   justify-items: center;
-  justify-content: center;
   display: grid;
   grid-template-rows: 20% 60% 10% 10%;
   border: 1px solid var(--accent);
