@@ -28,7 +28,7 @@ export const findPollById = (pollId, token) =>
         .get(`/api/echo-chamber/polls/${pollId}`, getAuthHeaders(token))
         .then(response =>response.data)
 
-export const findAll = token =>
+export const findAllPolls = token =>
     axios
         .get('/api/echo-chamber/polls', getAuthHeaders(token))
         .then(response => response.data)
@@ -47,4 +47,11 @@ export const giveAnswer = (selectedAnswerId, token) => {
     return axios
         .post(`/api/echo-chamber/polls/answer/${selectedAnswerId}`, null, getAuthHeaders(token))
         .then(()=>findOpenPolls(token))
+}
+
+export const deletePollById = (pollId, token) =>{
+    return axios
+        .delete(`/api/echo-chamber/polls/${pollId}`, getAuthHeaders(token))
+        .then(()=>findAllPolls(token))
+        .then(response=>response.data)
 }
