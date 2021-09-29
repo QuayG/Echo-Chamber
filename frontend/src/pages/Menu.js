@@ -19,7 +19,7 @@ export default function Menu() {
             <Main>
                 <h1>Hier könnte mal was stehen.</h1>
             </Main>
-            <Navbar user={user}/>
+            <Navbar/>
         </Page>
     )
 }

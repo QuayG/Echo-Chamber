@@ -32,6 +32,6 @@ const Wrapper = styled.nav`
   
   a.active{
     background-color: var(--accent);
-    border-radius: 50px;
+    border-radius: 5px;
   }
 `
