@@ -8,7 +8,7 @@ import CreatePoll from "./pages/CreatePoll";
 import Result from "./pages/Result";
 import Vote from "./pages/Vote";
 import Results from "./pages/Results";
-
+import DeletePolls from "./pages/DeletePolls";
 
 export default function App() {
     return (
@@ -23,6 +23,7 @@ export default function App() {
                     <Route exact path="/results" component={Results} />
                     <Route path="/results/:pollId" component={Result} />
                     <Route path="/vote/:pollId" component={Vote} />
+                    <Route path="/delete" component={DeletePolls}/>
                 </Switch>
             </Router>
         </AuthProvider>
