@@ -1,18 +1,17 @@
 import styled from "styled-components/macro";
-import {Link} from "react-router-dom";
 
 export default function ReducedPollCard({poll}){
     return (
-        <LinkStyled to={`/vote/${poll.id}`}>
+        <Wrapper>
             <h3>{poll.title}</h3>
             <p>Number of participants: {poll.participants.length}</p>
             <p>Creator: {poll.creator.userName}</p>
             <p>Topic: TO DO</p>
-        </LinkStyled>
+        </Wrapper>
     )
 }
 
-const LinkStyled = styled(Link)`
+const Wrapper = styled.div`
   display: block;
   height: min-content;
   width: 260px;

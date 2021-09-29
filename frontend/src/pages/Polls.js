@@ -1,14 +1,14 @@
 import Page from "../components/Page";
 import Header from "../components/Header";
+import styled from "styled-components/macro";
 import {useAuth} from "../auth/AuthProvider";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import Navbar from "../components/Navbar";
 import {useEffect, useState} from "react";
 import {findOpenPolls} from "../service/api-service";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import PollsList from "../components/PollsList";
-import StyledLink from "../components/StyledLink";
 
 
 const initialState = [
@@ -51,8 +51,19 @@ export default function Polls() {
             {loading && <Loading/>}
             {!loading && <PollsList setPolls={setPolls} polls={polls}/>}
             {error && <Error>{error}</Error>}
-            <StyledLink to="/create">Create new poll</StyledLink>
+            <CreatePollLink to="/create">Create new poll</CreatePollLink>
             <Navbar/>
         </Page>
     )
 }
+
+const CreatePollLink = styled(Link)`
+  text-decoration: none;
+  padding: var(--size-m);
+  background: var(--neutral-dark);
+  border: 1px solid var(--neutral-light);
+  color: var(--neutral-light);
+  font-size: var(--size-l);
+  border-radius: var(--size-s);
+  margin: 10px;
+`

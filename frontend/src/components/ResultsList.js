@@ -1,5 +1,6 @@
 import styled from "styled-components/macro";
-import ReducedResultCard from "./ReducedResultCard";
+import ReducedPollCard from "./ReducedPollCard";
+import StyledLink from "./StyledLink";
 
 export default function ResultsList({polls}) {
 
@@ -7,7 +8,10 @@ export default function ResultsList({polls}) {
         <Wrapper>
             {polls.map(poll => (
                 <li key={poll.title}>
-                    <ReducedResultCard poll={poll}/>
+                    <StyledLink to={`/results/${poll.id}`}>
+                        <ReducedPollCard poll={poll}/>
+                    </StyledLink>
+
                 </li>
             ))}
         </Wrapper>
