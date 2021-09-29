@@ -27,7 +27,7 @@ export default function Login() {
         setError()
         setLoading(true)
         login(credentials)
-            .catch(error => setError(error.response.data.message))
+            .catch(error => setError(error.response.data.error))
             .finally(setLoading(false))
     }
 

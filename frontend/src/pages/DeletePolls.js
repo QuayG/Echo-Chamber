@@ -27,7 +27,7 @@ export default function DeletePolls() {
         setError()
         findAllPolls(token)
             .then(response => setPolls(response))
-            .catch(error => setError(error.response.data.message))
+            .catch(error => setError(error.response.data.error))
             .finally(() => setLoading(false))
     }, [token, deleted])
 

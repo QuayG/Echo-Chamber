@@ -42,7 +42,7 @@ export default function Register() {
         }
         createUser(user)
             .then(() => setCreatedUser(user))
-            .catch(error => setError(error.response.data.message))
+            .catch(error => setError(error.response.data.error))
             .finally(() => setLoading(false))
     }
 
