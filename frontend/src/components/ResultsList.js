@@ -11,7 +11,6 @@ export default function ResultsList({polls}) {
                     <StyledLink to={`/results/${poll.id}`}>
                         <ReducedPollCard poll={poll}/>
                     </StyledLink>
-
                 </li>
             ))}
         </Wrapper>
