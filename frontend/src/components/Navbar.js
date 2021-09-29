@@ -7,6 +7,7 @@ export default function Navbar(){
         <Wrapper>
             <NavLink to="/polls">Polls</NavLink>
             <NavLink to="/results">Results</NavLink>
+            <NavLink to="/delete">Delete polls</NavLink>
         </Wrapper>
     )
 }
