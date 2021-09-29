@@ -1,13 +1,16 @@
 import {NavLink} from "react-router-dom";
+import {useAuth} from "../auth/AuthProvider";
 import styled from "styled-components/macro";
 
 export default function Navbar(){
+
+    const {user} = useAuth()
 
     return(
         <Wrapper>
             <NavLink to="/polls">Polls</NavLink>
             <NavLink to="/results">Results</NavLink>
-            <NavLink to="/delete">Delete polls</NavLink>
+            {user.role === 'admin' && <NavLink to="/delete">Delete polls</NavLink>}
         </Wrapper>
     )
 }
