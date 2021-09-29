@@ -31,6 +31,7 @@ const Wrapper = styled.nav`
   }
   
   a.active{
-    color: var(--accent);
+    background-color: var(--accent);
+    border-radius: 50px;
   }
 `
