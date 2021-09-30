@@ -8,7 +8,7 @@ import Error from "../components/Error";
 import Navbar from "../components/Navbar";
 import {findDonePolls} from "../service/api-service";
 import ResultsList from "../components/ResultsList";
-import {InitialPollState} from "../components/InitialPollState";
+import {InitialPollState} from "../service/initialStates-service";
 
 export default function Results() {
 

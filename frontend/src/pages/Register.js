@@ -7,7 +7,7 @@ import {createUser} from "../service/api-service";
 import {Redirect} from "react-router-dom";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
-import {InitialUserState} from "../components/InitialUserState";
+import {InitialUserState} from "../service/initialStates-service";
 
 export default function Register() {
 

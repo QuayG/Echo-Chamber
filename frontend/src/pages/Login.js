@@ -9,16 +9,12 @@ import Page from "../components/Page";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
 import styled from "styled-components/macro";
-
-const initialState = {
-    userName: '',
-    password: '',
-}
+import {InitialUserState} from "../service/initialStates-service";
 
 export default function Login() {
 
     const {login, user} = useAuth()
-    const [credentials, setCredentials] = useState(initialState)
+    const [credentials, setCredentials] = useState(InitialUserState)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
 
