@@ -2,6 +2,7 @@ package de.echochamber.backend.controller;
 
 import de.echochamber.backend.api.Answer;
 import de.echochamber.backend.api.Poll;
+import de.echochamber.backend.api.WelcomeInfo;
 import de.echochamber.backend.model.AnswerEntity;
 import de.echochamber.backend.model.PollEntity;
 import de.echochamber.backend.model.PossibleAnswerEntity;
@@ -84,6 +85,11 @@ public class PollController extends Mapper{
     public ResponseEntity<List<Poll>> findAll() {
         List<PollEntity> pollEntities = pollsService.findAll();
         return ok(map(pollEntities));
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<WelcomeInfo> getWelcomeInfo(){
+        return ok(pollsService.getWelcomeInfo());
     }
 
     @GetMapping(value = "/open")

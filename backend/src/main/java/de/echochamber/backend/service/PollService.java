@@ -1,5 +1,6 @@
 package de.echochamber.backend.service;
 
+import de.echochamber.backend.api.WelcomeInfo;
 import de.echochamber.backend.model.AnswerEntity;
 import de.echochamber.backend.model.PollEntity;
 import de.echochamber.backend.model.UserEntity;
@@ -20,10 +21,14 @@ import static org.springframework.util.Assert.hasText;
 @Getter
 public class PollService {
     private final PollRepository pollRepository;
+    private final UserService userService;
+    private final AnswerService answerService;
 
     @Autowired
-    public PollService(PollRepository pollRepository) {
+    public PollService(PollRepository pollRepository, UserService userService, AnswerService answerService) {
         this.pollRepository = pollRepository;
+        this.userService = userService;
+        this.answerService = answerService;
     }
 
     public PollEntity create(PollEntity pollEntity) {
@@ -80,5 +85,15 @@ public class PollService {
         PollEntity deletedPoll = pollToDelete.get();
         pollRepository.delete(deletedPoll);
         return deletedPoll;
-    };
+    }
+
+    public WelcomeInfo getWelcomeInfo() {
+        int numberOfUsers = userService.numberOfUsers();
+        int numberOfPolls = pollRepository.findAll().size();
+        int numberOfAnswers = answerService.numberOfAnswers();
+        return WelcomeInfo.builder()
+                .numberOfPolls(numberOfPolls)
+                .numberOfUsers(numberOfUsers)
+                .numberOfAnswers(numberOfAnswers).build();
+    }
 }

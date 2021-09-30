@@ -49,4 +49,8 @@ public class UserService {
             throw new EntityExistsException(String.format("User with name=%s already exists", username));
         }
     }
+
+    public int numberOfUsers() {
+        return userRepository.findAll().size();
+    }
 }

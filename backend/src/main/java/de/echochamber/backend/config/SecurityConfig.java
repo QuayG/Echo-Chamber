@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(GET, SWAGGER_URLS).permitAll()
                 .antMatchers(POST, ACCESS_TOKEN_URL).permitAll()
                 .antMatchers(POST, "/user/register").permitAll()
+                .antMatchers(GET, "/polls/info").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
