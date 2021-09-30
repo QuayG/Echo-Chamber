@@ -27,3 +27,10 @@ export const InitialPollState =
         creator: InitialUserState,
         participants: [InitialUserState],
     }
+
+export const InitialWelcomeInfo =
+    {
+        numberOfUsers: "",
+        numberOfPolls: "",
+        numberOfAnswers: "",
+    }
