@@ -31,7 +31,7 @@ export default function Login() {
         setCredentials({...credentials, [event.target.name]: event.target.value})
 
     if (user) {
-        return <Redirect to="/main_menu"/>
+        return <Redirect to="/home"/>
     }
 
     return (

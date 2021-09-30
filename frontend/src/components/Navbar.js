@@ -8,6 +8,7 @@ export default function Navbar(){
 
     return(
         <Wrapper>
+            <NavLink to="/home">Home</NavLink>
             <NavLink to="/polls">Polls</NavLink>
             <NavLink to="/results">Results</NavLink>
             {user.role === 'admin' && <NavLink to="/delete">Delete polls</NavLink>}

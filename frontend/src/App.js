@@ -1,7 +1,7 @@
 import AuthProvider from "./auth/AuthProvider";
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
 import Login from "./pages/Login";
-import Menu from "./pages/Menu";
+import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Polls from "./pages/Polls";
 import CreatePoll from "./pages/CreatePoll";
@@ -18,7 +18,7 @@ export default function App() {
                 <Switch>
                     <Route exact path="/" component={Login} />
                     <Route path="/register" component={Register} />
-                    <ProtectedRoute path="/main_menu" component={Menu} />
+                    <ProtectedRoute path="/home" component={Home} />
                     <ProtectedRoute exact path="/polls" component={Polls} />
                     <ProtectedRoute path="/create" component={CreatePoll} />
                     <ProtectedRoute exact path="/results" component={Results} />

@@ -22,7 +22,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private Set<PollEntity> pollsCreated;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
     @Column(name = "first_name", nullable = false)
