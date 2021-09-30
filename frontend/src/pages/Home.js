@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import {findAllPolls} from "../service/api-service";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import {InitialPollState} from "../components/InitialPollState";
+import {InitialPollState} from "../service/initialStates-service";
 
 export default function Home() {
 
