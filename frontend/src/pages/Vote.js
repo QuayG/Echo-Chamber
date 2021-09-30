@@ -8,42 +8,7 @@ import {findPollById, giveAnswer} from "../service/api-service";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import Page from "../components/Page";
-
-const initialState = {
-    title: "",
-    possibleAnswers: [
-        {
-            id: "",
-            possibleAnswer: "",
-        }
-    ],
-    givenAnswers: [
-        {
-            user: {
-                userName: "",
-                firstName: "",
-                lastName: "",
-                role: "",
-            },
-            answer: "",
-        },
-    ],
-    participants: [
-        {
-            userName: "",
-            firstName: "",
-            lastName: "",
-            role: "",
-        },
-    ],
-    creator: {
-        userName: "",
-        firstName: "",
-        lastName: "",
-        role: "",
-    },
-}
-
+import {InitialPollState} from "../service/initialStates-service";
 
 export default function Vote() {
 
@@ -51,7 +16,7 @@ export default function Vote() {
     const {pollId} = useParams()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
-    const [poll, setPoll] = useState(initialState)
+    const [poll, setPoll] = useState(InitialPollState)
 
     const vote = (selectedAnswerId) => {
         return giveAnswer(selectedAnswerId, token)

@@ -8,28 +8,14 @@ import Error from "../components/Error";
 import Navbar from "../components/Navbar";
 import {findDonePolls} from "../service/api-service";
 import ResultsList from "../components/ResultsList";
-
-const initialState = [
-    {
-        title: "",
-        givenAnswers: [],
-        possibleAnswers: [
-            {
-                id: "",
-                possibleAnswer: "",
-            }
-        ],
-        creator: {},
-        participants: [],
-    }
-]
+import {InitialPollState} from "../service/initialStates-service";
 
 export default function Results() {
 
     const {user, token} = useAuth()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
-    const [polls, setPolls] = useState(initialState)
+    const [polls, setPolls] = useState([InitialPollState])
 
     useEffect(() => {
         setLoading(true)

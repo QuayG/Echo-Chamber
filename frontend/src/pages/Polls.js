@@ -9,28 +9,14 @@ import {findOpenPolls} from "../service/api-service";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import PollsList from "../components/PollsList";
+import {InitialPollState} from "../service/initialStates-service";
 
-
-const initialState = [
-    {
-        title: "",
-        givenAnswers: [],
-        possibleAnswers: [
-            {
-                id: "",
-                possibleAnswer: "",
-            }
-        ],
-        creator: {},
-        participants: [],
-    }
-]
 export default function Polls() {
 
     const {user, token} = useAuth()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
-    const [polls, setPolls] = useState(initialState)
+    const [polls, setPolls] = useState([InitialPollState])
 
     useEffect(() => {
         setLoading(true)

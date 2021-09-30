@@ -7,18 +7,11 @@ import {createUser} from "../service/api-service";
 import {Redirect} from "react-router-dom";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
-
-const initialState = {
-    userName: '',
-    firstName: '',
-    lastName: '',
-    password: '',
-    repeatedPassword: '',
-}
+import {InitialUserState} from "../service/initialStates-service";
 
 export default function Register() {
 
-    const [newUserInput, setNewUserInput] = useState(initialState)
+    const [newUserInput, setNewUserInput] = useState(InitialUserState)
     const [createdUser, setCreatedUser] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
