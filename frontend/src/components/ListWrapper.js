@@ -6,12 +6,15 @@ export default styled.ul`
   align-items: center;
   height: 100%;
   width: 100%;
-  padding: var(--size-s);
+  padding: var(--size-m);
   overflow-y: scroll;
   list-style-type: none;
   text-align: center;
   text-decoration: none;
   font-size: 1em;
+  border: 2px solid var(--accent);
+  border-radius: var(--size-m);
+
 
   li {
     display: list-item;
