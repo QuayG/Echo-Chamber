@@ -1,9 +1,9 @@
 import Page from "../components/Page";
 import Header from "../components/Header";
 import TextField from "../components/TextField";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Button from "../components/Button";
-import {createPoll} from "../service/api-service";
+import {createPoll, getTopics} from "../service/api-service";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import Navbar from "../components/Navbar";
@@ -11,19 +11,28 @@ import styled from "styled-components/macro";
 import {useAuth} from "../auth/AuthProvider";
 import {Redirect} from "react-router-dom";
 import PossibleAnswerList from "../components/PossibleAnswerList";
+import Select from "../components/StyledSelect";
 
 export default function CreatePoll() {
 
     const {user, token} = useAuth()
     const [pollTitle, setPollTitle] = useState('')
+    const [topic, setTopic] = useState('')
+    const [topics, setTopics] = useState([])
     const [answerToAdd, setAnswerToAdd] = useState('')
     const [possibleAnswers, setPossibleAnswers] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
 
+    useEffect(() => {
+        getTopics(token)
+            .then(response => setTopics(response.map(topic=>topic.name)))
+    }, [user, token])
+
     const handleSubmit = event => {
         const poll = {
             title: pollTitle,
+            topic: topic,
             user: user,
             possibleAnswers: possibleAnswers,
             participants: [],
@@ -33,10 +42,14 @@ export default function CreatePoll() {
         setLoading(true)
         createPoll(poll, token)
             .catch(error => setError(error))
-            .finally(()=>setLoading(false))
+            .finally(() => setLoading(false))
         setPollTitle('')
         setAnswerToAdd('')
         setPossibleAnswers([])
+    }
+
+    const handleSelectChange = event => {
+        setTopic(event.target.value)
     }
 
     const handleTitleInputChange = event => {
@@ -68,6 +81,14 @@ export default function CreatePoll() {
                     name="title"
                     value={pollTitle}
                     onChange={handleTitleInputChange}
+                />
+
+                <Select
+                    name="topic"
+                    value={topic.name}
+                    values={topics}
+                    onChange={handleSelectChange}
+                    title="Topic"
                 />
 
                 <PossibleAnswerList possibleAnswers={possibleAnswers}/>
