@@ -6,7 +6,6 @@ export default function ReducedPollCard({poll}){
             <h3>{poll.title}</h3>
             <p>Number of participants: {poll.participants.length}</p>
             <p>Creator: {poll.creator.userName}</p>
-            <p>Topic: TO DO</p>
         </Wrapper>
     )
 }
@@ -17,6 +16,6 @@ const Wrapper = styled.div`
   width: 260px;
   color: var(--neutral-light);
   background: var(--accent-light);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--neutral-light);
   border-radius: var(--size-s);
 `

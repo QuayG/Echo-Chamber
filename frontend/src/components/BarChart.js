@@ -11,7 +11,6 @@ export default function BarChart({poll}) {
                 poll.givenAnswers.forEach(givenAnswer => {
                     if (givenAnswer.answer === possibleAnswer.possibleAnswer) {
                         count++
-                        console.log("count")
                     }
                 })
                 votes.push(count)
@@ -20,7 +19,6 @@ export default function BarChart({poll}) {
         return votes
     }
 
-    console.log(data())
     const possibleAnswers = () => poll.possibleAnswers.map(possibleAnswer => possibleAnswer.possibleAnswer)
 
     const numSteps = ()=>{
@@ -72,6 +70,7 @@ export default function BarChart({poll}) {
                         ]
                     }
                 }}
+                height={300}
             />
         </Wrapper>
     )
@@ -80,5 +79,8 @@ export default function BarChart({poll}) {
 const Wrapper = styled.div`
   display: block;
   text-align: center;
-  margin: 12px;
+  margin: 20px;
+  h1{
+    margin-bottom: 40px;
+  }
 `
