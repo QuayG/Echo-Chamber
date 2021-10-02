@@ -4,9 +4,9 @@ export default function ReducedPollCard({poll}){
     return (
         <Wrapper>
             <h3>{poll.title}</h3>
-            <p>Number of participants: {poll.participants.length}</p>
-            <p>Creator: {poll.creator.userName}</p>
-            <p>Topic: {poll.topic.name}</p>
+            <p><strong>Number of participants: </strong>{poll.participants.length}</p>
+            <p><strong>Topic: </strong>{poll.topic.name}</p>
+            <p><strong>Creator: </strong>{poll.creator.userName}</p>
         </Wrapper>
     )
 }

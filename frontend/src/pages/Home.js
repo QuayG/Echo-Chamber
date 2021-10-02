@@ -57,10 +57,13 @@ export default function Home() {
             {!loading && (
                 <Wrapper>
                     <h1>Hello {user.userName}</h1>
-                    <h2>Number of open polls: {polls.length - donePolls.length} </h2>
-                    <h2>Number of polls you voted on: {donePolls.length}</h2>
-                    <h2>Number of polls you created: {yourPolls.length}</h2>
-                    <h2>Number of votes on your polls: {votesOnYourPolls}</h2>
+                    <img src="https://thispersondoesnotexist.com/image" alt=""/>
+                    <div>
+                        <h3>Number of open polls: {polls.length - donePolls.length} </h3>
+                        <h3>Number of polls you voted on: {donePolls.length}</h3>
+                        <h3>Number of polls you created: {yourPolls.length}</h3>
+                        <h3>Number of votes on your polls: {votesOnYourPolls}</h3>
+                    </div>
                 </Wrapper>
             )
             }
@@ -71,5 +74,20 @@ export default function Home() {
 }
 
 const Wrapper = styled.div`
+  height: 100%;
+  display: grid;
+  grid-template-rows: 20% 40% 1fr;
+  place-items: center;
+  justify-items: center;
+  
+  div {
+    display: grid;
+    justify-items: center;
+  }
+
+  img {
+    height: 200px;
+    border-radius: 50%;
+  }
 
 `
