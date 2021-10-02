@@ -30,4 +30,7 @@ public class Poll {
 
     @ApiModelProperty(required = true, notes = " Poll id")
     private Long id;
+
+    @ApiModelProperty(required = true, notes = "Poll topic")
+    private Topic topic;
 }
