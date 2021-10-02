@@ -32,7 +32,9 @@ export default function CreatePoll() {
     const handleSubmit = event => {
         const poll = {
             title: pollTitle,
-            topic: topic,
+            topic: {
+                name: topic
+            },
             user: user,
             possibleAnswers: possibleAnswers,
             participants: [],

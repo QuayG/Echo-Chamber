@@ -1,18 +1,11 @@
 package de.echochamber.backend.controller;
 
-import de.echochamber.backend.api.Answer;
-import de.echochamber.backend.api.Poll;
-import de.echochamber.backend.api.PossibleAnswer;
-import de.echochamber.backend.api.User;
+import de.echochamber.backend.api.*;
 import de.echochamber.backend.config.JwtConfig;
-import de.echochamber.backend.model.AnswerEntity;
-import de.echochamber.backend.model.PollEntity;
-import de.echochamber.backend.model.PossibleAnswerEntity;
-import de.echochamber.backend.model.UserEntity;
+import de.echochamber.backend.model.*;
 import de.echochamber.backend.repo.PollRepository;
-import de.echochamber.backend.repo.PossibleAnswerRepository;
+import de.echochamber.backend.repo.TopicRepository;
 import de.echochamber.backend.repo.UserRepository;
-import de.echochamber.backend.service.PollService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.AfterEach;
@@ -45,9 +38,6 @@ class PollControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Autowired
-    private PollService pollService;
-
-    @Autowired
     private JwtConfig jwtConfig;
 
     @Autowired
@@ -57,7 +47,7 @@ class PollControllerTest {
     private PollRepository pollRepository;
 
     @Autowired
-    private PossibleAnswerRepository possibleAnswerRepository;
+    private TopicRepository topicRepository;
 
     @BeforeEach
     public void someData() {
@@ -66,6 +56,11 @@ class PollControllerTest {
                 .firstName("Test")
                 .lastName("User")
                 .role("user").build());
+
+        TopicEntity topicEntity = TopicEntity.builder()
+                .name("IT").build();
+
+        topicRepository.save(topicEntity);
 
         userRepository.saveAndFlush(testUser);
 
@@ -94,13 +89,14 @@ class PollControllerTest {
     }
 
     @AfterEach
-    private void clearDb() {
+    public void clearDb() {
         pollRepository.deleteAll();
         userRepository.deleteAll();
+        topicRepository.deleteAll();
     }
 
     private String getUrl() {
-        return "http://localhost:" + port + "/polls/";
+        return "http://localhost:" + port + "/polls";
     }
 
     @Test
@@ -118,6 +114,9 @@ class PollControllerTest {
 
         Set<Answer> answers = new HashSet<>();
 
+        Topic topic = Topic.builder()
+                .name("IT").build();
+
         User user = User.builder()
                 .userName("TestUser")
                 .role("user").build();
@@ -126,6 +125,7 @@ class PollControllerTest {
                 .title("Do you like polls?")
                 .creator(user)
                 .possibleAnswers(possibleAnswers)
+                .topic(topic)
                 .givenAnswers(answers).build();
 
         Map<String, Object> claims = new HashMap<>();
@@ -173,9 +173,13 @@ class PollControllerTest {
         User user = User.builder()
                 .userName("TestUser").build();
 
+        Topic topic = Topic.builder()
+                .name("IT").build();
+
         Poll poll = Poll.builder()
                 .creator(user)
                 .possibleAnswers(possibleAnswers)
+                .topic(topic)
                 .title(title)
                 .build();
 
@@ -222,8 +226,12 @@ class PollControllerTest {
         User user = User.builder()
                 .userName("TestUser").build();
 
+        Topic topic = Topic.builder()
+                .name("IT").build();
+
         Poll poll = Poll.builder()
                 .creator(user)
+                .topic(topic)
                 .title(title)
                 .possibleAnswers(possibleAnswers).build();
 
@@ -266,8 +274,12 @@ class PollControllerTest {
         User user = User.builder()
                 .userName("TestUser").build();
 
+        Topic topic = Topic.builder()
+                .name("IT").build();
+
         Poll poll = Poll.builder()
                 .creator(user)
+                .topic(topic)
                 .title(title)
                 .possibleAnswers(possibleAnswers).build();
 

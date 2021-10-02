@@ -9,7 +9,7 @@ export default function Header({title}){
 
     return(
         <Wrapper>
-            <MyLogo src="echo.jpg" alt='Logo'/>
+            <MyLogo src="../echo.jpg" alt='Logo'/>
             <h2>{title}</h2>
             {user && <Button onClick={logout}>Logout</Button>}
             {!user && <div/>}
