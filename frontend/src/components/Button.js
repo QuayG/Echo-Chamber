@@ -12,7 +12,7 @@ export default styled.button`
 
   :disabled {
     border-color: var(--neutral-dark);
-    background: var(--neutral-dark);
+    background: var(--neutral-light);
     color: var(--neutral-light);
   }
 
