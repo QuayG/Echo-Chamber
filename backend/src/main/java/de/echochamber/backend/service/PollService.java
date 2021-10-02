@@ -3,8 +3,10 @@ package de.echochamber.backend.service;
 import de.echochamber.backend.api.WelcomeInfo;
 import de.echochamber.backend.model.AnswerEntity;
 import de.echochamber.backend.model.PollEntity;
+import de.echochamber.backend.model.TopicEntity;
 import de.echochamber.backend.model.UserEntity;
 import de.echochamber.backend.repo.PollRepository;
+import de.echochamber.backend.repo.TopicRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,17 +25,20 @@ public class PollService {
     private final PollRepository pollRepository;
     private final UserService userService;
     private final AnswerService answerService;
+    private final TopicRepository topicRepository;
 
     @Autowired
-    public PollService(PollRepository pollRepository, UserService userService, AnswerService answerService) {
+    public PollService(PollRepository pollRepository, UserService userService, AnswerService answerService, TopicRepository topicRepository) {
         this.pollRepository = pollRepository;
         this.userService = userService;
         this.answerService = answerService;
+        this.topicRepository = topicRepository;
     }
 
     public PollEntity create(PollEntity pollEntity) {
 
         hasText(pollEntity.getTitle(), "Poll needs a title");
+        hasText(pollEntity.getTopic().getName(), "Poll needs a topic");
 
         if (pollEntity.getPossibleAnswers().size()<2){
             throw new IllegalArgumentException("Poll needs minimum 2 possible answers");
@@ -50,6 +55,10 @@ public class PollService {
     public List<PollEntity> findAll(){
 
         return pollRepository.findAll();
+    }
+
+    public List<TopicEntity> getTopics(){
+        return topicRepository.findAll();
     }
 
     public Set<Optional<PollEntity>> findAllByParticipantsNotContaining(UserEntity userEntity){
@@ -95,5 +104,9 @@ public class PollService {
                 .numberOfPolls(numberOfPolls)
                 .numberOfUsers(numberOfUsers)
                 .numberOfAnswers(numberOfAnswers).build();
+    }
+
+    public Optional<TopicEntity> findTopicByName(String name) {
+        return topicRepository.findByName(name);
     }
 }
