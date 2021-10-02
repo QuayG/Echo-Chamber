@@ -28,6 +28,11 @@ export const findPollById = (pollId, token) =>
         .get(`/api/echo-chamber/polls/${pollId}`, getAuthHeaders(token))
         .then(response => response.data)
 
+export const getTopics = token =>
+    axios
+        .get('/api/echo-chamber/polls/topics', getAuthHeaders(token))
+        .then(response=>response.data)
+
 export const findAllPolls = token =>
     axios
         .get('/api/echo-chamber/polls', getAuthHeaders(token))
