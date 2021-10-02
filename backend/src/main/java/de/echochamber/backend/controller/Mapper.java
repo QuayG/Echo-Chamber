@@ -1,13 +1,7 @@
 package de.echochamber.backend.controller;
 
-import de.echochamber.backend.api.Answer;
-import de.echochamber.backend.api.Poll;
-import de.echochamber.backend.api.PossibleAnswer;
-import de.echochamber.backend.api.User;
-import de.echochamber.backend.model.AnswerEntity;
-import de.echochamber.backend.model.PollEntity;
-import de.echochamber.backend.model.PossibleAnswerEntity;
-import de.echochamber.backend.model.UserEntity;
+import de.echochamber.backend.api.*;
+import de.echochamber.backend.model.*;
 
 import java.util.*;
 
@@ -62,6 +56,15 @@ abstract class Mapper {
         return users;
     }
 
+    public List<Topic> mapTopics(List<TopicEntity> topicEntities){
+        List<Topic> topics = new ArrayList<>();
+        for (TopicEntity topicEntity: topicEntities) {
+            topics.add(Topic.builder()
+                    .name(topicEntity.getName()).build());
+        }
+        return topics;
+    }
+
     public Poll map(PollEntity pollEntity) {
 
         List<PossibleAnswer> possibleAnswers = new ArrayList<>();
@@ -72,14 +75,21 @@ abstract class Mapper {
 
         Set<Answer> answers = mapAnswers(pollEntity.getAnswerEntities());
         Set<User> participants = map(pollEntity.getParticipants());
+        Topic topic = map(pollEntity.getTopic());
         User creator = map(pollEntity.getCreatedBy());
         return Poll.builder()
                 .title(pollEntity.getTitle())
+                .topic(topic)
                 .creator(creator)
                 .possibleAnswers(possibleAnswers)
                 .givenAnswers(answers)
                 .id(pollEntity.getId())
                 .participants(participants).build();
+    }
+
+    public Topic map(TopicEntity topicEntity){
+        return Topic.builder()
+                .name(topicEntity.getName()).build();
     }
 
     public User map(UserEntity userEntity) {
