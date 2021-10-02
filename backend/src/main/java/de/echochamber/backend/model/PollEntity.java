@@ -34,6 +34,10 @@ public class PollEntity {
     @JoinColumn(name = "created_by", nullable = false)
     private UserEntity createdBy;
 
+    @ManyToOne
+    @JoinColumn(name = "topic")
+    private TopicEntity topic;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="poll_participants",
             joinColumns={@JoinColumn(name="poll_id")},

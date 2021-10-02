@@ -2,14 +2,18 @@ package de.echochamber.backend.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Set;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Poll {
 
@@ -30,4 +34,7 @@ public class Poll {
 
     @ApiModelProperty(required = true, notes = " Poll id")
     private Long id;
+
+    @ApiModelProperty(required = true, notes = "Poll topic")
+    private Topic topic;
 }

@@ -19,6 +19,11 @@ export const InitialAnswerState =
         answer: "",
     }
 
+    export const InitialTopicState =
+    {
+        name: ""
+    }
+
 export const InitialPollState =
     {
         title: "",
@@ -26,6 +31,7 @@ export const InitialPollState =
         possibleAnswers: [InitialPossibleAnswerState],
         creator: InitialUserState,
         participants: [InitialUserState],
+        topic: InitialTopicState,
     }
 
 export const InitialWelcomeInfo =

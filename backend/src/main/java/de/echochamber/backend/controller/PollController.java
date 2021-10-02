@@ -2,11 +2,9 @@ package de.echochamber.backend.controller;
 
 import de.echochamber.backend.api.Answer;
 import de.echochamber.backend.api.Poll;
+import de.echochamber.backend.api.Topic;
 import de.echochamber.backend.api.WelcomeInfo;
-import de.echochamber.backend.model.AnswerEntity;
-import de.echochamber.backend.model.PollEntity;
-import de.echochamber.backend.model.PossibleAnswerEntity;
-import de.echochamber.backend.model.UserEntity;
+import de.echochamber.backend.model.*;
 import de.echochamber.backend.service.AnswerService;
 import de.echochamber.backend.service.PollService;
 import de.echochamber.backend.service.UserService;
@@ -52,6 +50,13 @@ public class PollController extends Mapper{
             throw new EntityNotFoundException("User not found");
         }
         pollEntity.setCreatedBy(creatorOptional.get());
+
+        Optional<TopicEntity> topicEntityOptional = pollsService.findTopicByName(newPoll.getTopic().getName());
+        if (topicEntityOptional.isEmpty()){
+            throw new EntityNotFoundException("Topic not found");
+        }
+        pollEntity.setTopic(topicEntityOptional.get());
+
         PollEntity createdPollEntity = pollsService.create(pollEntity);
         return ok(map(createdPollEntity));
     }
@@ -63,6 +68,11 @@ public class PollController extends Mapper{
         }
         PollEntity deletedPoll = pollsService.deletePollById(pollId);
         return ok(map(deletedPoll));
+    }
+
+    @GetMapping(value = "/topics")
+    public ResponseEntity<List<Topic>> getTopics(@AuthenticationPrincipal UserEntity authUser){
+        return ok(mapTopics(pollsService.getTopics()));
     }
 
     @PostMapping(value = "/answer/{answerId}")
