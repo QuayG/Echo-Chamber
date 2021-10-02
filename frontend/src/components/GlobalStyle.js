@@ -7,7 +7,7 @@ export default createGlobalStyle`
     --background-light: #222;
     --accent: #484747;
     --accent-light: #666;
-    --neutral-dark: #666;
+    --neutral-dark: #414040;
     --neutral-light: #efefef;
     --error: var(--accent);
 

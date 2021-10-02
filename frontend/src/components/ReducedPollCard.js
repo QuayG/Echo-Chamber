@@ -17,6 +17,6 @@ const Wrapper = styled.div`
   width: 260px;
   color: var(--neutral-light);
   background: var(--accent-light);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--neutral-light);
   border-radius: var(--size-s);
 `

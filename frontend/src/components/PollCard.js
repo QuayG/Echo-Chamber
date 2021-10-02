@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   justify-items: center;
   display: grid;
   grid-template-rows: 20% 60% 10% 10%;
-  border: 1px solid var(--accent);
+  border: 2px solid var(--accent);
   border-radius: var(--size-s);
-  
+  text-align: center;
 `

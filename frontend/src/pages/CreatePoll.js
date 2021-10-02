@@ -113,7 +113,7 @@ export default function CreatePoll() {
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-rows: 10% 40% 10% 10% 10%;
+  grid-template-rows: 20% 30% 10% 10% 10%;
   place-items: center;
   grid-gap: var(--size-xl);
   padding: var(--size-xl);
