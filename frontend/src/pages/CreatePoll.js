@@ -69,9 +69,14 @@ export default function CreatePoll() {
         setAnswerToAdd('')
     }
 
+    const removePossibleAnswer = answerToRemove =>{
+        setPossibleAnswers(possibleAnswers.filter(answer => answer.possibleAnswer !== answerToRemove))
+    }
+
     if (!user) {
         return <Redirect to="/"/>
     }
+
 
     return (
         <Page>
@@ -100,8 +105,8 @@ export default function CreatePoll() {
                     onChange={handleAnswerToAddInputChange}
                 />
                 <Button type="button" onClick={addPossibleAnswer}>Add Answer</Button>
-                <PossibleAnswerList possibleAnswers={possibleAnswers}/>
-                <Button>Save</Button>
+                <PossibleAnswerList possibleAnswers={possibleAnswers} removePossibleAnswer={removePossibleAnswer}/>
+                <Button type="submit">Save</Button>
             </Wrapper>
             }
             {error && <Error>{error.response.data.error}</Error>}
@@ -112,7 +117,7 @@ export default function CreatePoll() {
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr 30% 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 35% 1fr;
   place-items: center;
   grid-gap: var(--size-m);
   padding: var(--size-l);
