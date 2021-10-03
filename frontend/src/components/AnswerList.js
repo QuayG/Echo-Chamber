@@ -63,6 +63,7 @@ const Wrapper = styled.ul`
     display: grid;
     grid-template-rows: 80% 20%;
     justify-items: center;
+    font-size: var(--size-l);
     margin: 5px;
     padding: 5px;
   }
