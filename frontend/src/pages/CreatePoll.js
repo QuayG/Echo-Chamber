@@ -18,7 +18,7 @@ export default function CreatePoll() {
     const {user, token} = useAuth()
     const [pollTitle, setPollTitle] = useState('')
     const [topic, setTopic] = useState('')
-    const [topics, setTopics] = useState([])
+    const [topics, setTopics] = useState([''])
     const [answerToAdd, setAnswerToAdd] = useState('')
     const [possibleAnswers, setPossibleAnswers] = useState([])
     const [loading, setLoading] = useState(false)
@@ -27,7 +27,7 @@ export default function CreatePoll() {
     useEffect(() => {
         getTopics(token)
             .then(response => setTopics(response.map(topic=>topic.name)))
-    }, [user, token])
+    }, [token])
 
     const handleSubmit = event => {
         const poll = {
@@ -51,6 +51,7 @@ export default function CreatePoll() {
     }
 
     const handleSelectChange = event => {
+        event.preventDefault()
         setTopic(event.target.value)
     }
 
@@ -86,14 +87,11 @@ export default function CreatePoll() {
                 />
 
                 <Select
-                    name="topic"
-                    value={topic.name}
                     values={topics}
+                    create={true}
                     onChange={handleSelectChange}
-                    title="Topic"
+                    title="Select Topic"
                 />
-
-                <PossibleAnswerList possibleAnswers={possibleAnswers}/>
 
                 <TextField
                     title="Answer to add"
@@ -102,6 +100,7 @@ export default function CreatePoll() {
                     onChange={handleAnswerToAddInputChange}
                 />
                 <Button type="button" onClick={addPossibleAnswer}>Add Answer</Button>
+                <PossibleAnswerList possibleAnswers={possibleAnswers}/>
                 <Button>Save</Button>
             </Wrapper>
             }
@@ -113,17 +112,11 @@ export default function CreatePoll() {
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-rows: 20% 30% 10% 10% 10%;
+  grid-template-rows: 1fr 1fr 1fr 1fr 30% 1fr;
   place-items: center;
-  grid-gap: var(--size-xl);
-  padding: var(--size-xl);
-  margin: var(--size-xl);
+  grid-gap: var(--size-m);
+  padding: var(--size-l);
   height: 100%;
   width: 100%;
   overflow-y: scroll;
-
-  Button {
-    margin: 12px;
-  }
 `
-
