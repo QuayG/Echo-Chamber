@@ -77,6 +77,7 @@ export default function BarChart({poll}) {
 }
 
 const Wrapper = styled.div`
+  color: var(--neutral-light);
   display: block;
   text-align: center;
   margin: 20px;

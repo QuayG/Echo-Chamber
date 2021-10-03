@@ -5,8 +5,8 @@ export default styled.ul`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 100%;
-  padding: var(--size-m);
+  width: 300px;
+  padding: var(--size-s);
   overflow-y: scroll;
   list-style-type: none;
   text-align: center;
