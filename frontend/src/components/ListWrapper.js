@@ -4,7 +4,7 @@ export default styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  height: 95%;
   width: 300px;
   padding: var(--size-s);
   overflow-y: scroll;

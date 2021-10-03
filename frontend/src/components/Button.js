@@ -9,6 +9,7 @@ export default styled.button`
   font-size: var(--size-l);
   border-radius: var(--size-s);
   margin: 10px;
+  width: 150px;
 
   :disabled {
     border-color: var(--neutral-dark);

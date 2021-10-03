@@ -83,6 +83,7 @@ export default function Login() {
 }
 
 const RegisterLink = styled(Link)`
+  width: 150px;
   text-decoration: none;
   padding: var(--size-m);
   background: var(--neutral-dark);

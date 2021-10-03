@@ -28,6 +28,7 @@ const Wrapper = styled.header`
   border-bottom: 2px solid var(--neutral-dark);
   
   Button{
+    width: 100px;
     margin: var(--size-s);
     padding: var(--size-s);
   }
