@@ -5,7 +5,7 @@ export default function PollCard({poll, vote}) {
 
     return (
         <Wrapper>
-            <h3>{poll.title}</h3>
+            <h1>{poll.title}</h1>
             <AnswerList possibleAnswers={poll.possibleAnswers} vote={vote} pollId={poll.id}/>
             <p>No. of participants: {poll.givenAnswers.length}</p>
             <p>Created by: {poll.creator.userName}</p>
@@ -14,8 +14,8 @@ export default function PollCard({poll, vote}) {
 }
 
 const Wrapper = styled.div`
-  height: 80%;
-  width: 260px;
+  height: 90%;
+  width: 300px;
   justify-items: center;
   display: grid;
   grid-template-rows: 20% 60% 10% 10%;
